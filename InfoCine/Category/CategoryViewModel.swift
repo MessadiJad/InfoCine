@@ -20,6 +20,10 @@ class CategoryViewModel {
     
     let disposeBag = DisposeBag()
     
+    init() {
+        fetchCategoryList()
+    }
+    
     func fetchCategoryList() {
         let listOfCategory = [
             CategoryModel(id: 0, title:"Actors"),

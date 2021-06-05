@@ -9,12 +9,14 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CategoryViewController: UIViewController ,UISearchResultsUpdating, UISearchBarDelegate {
+class CategoryViewController: UIViewController ,UISearchResultsUpdating, UISearchBarDelegate, Storyboarded {
+    
     
     
     @IBOutlet weak var categoryTableView : UITableView!
 
     let viewModel = CategoryViewModel()
+    
     
     override func viewDidLoad() {
         

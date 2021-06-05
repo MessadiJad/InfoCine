@@ -9,15 +9,28 @@ import UIKit
 import WebKit
 
 
-class HomeViewController: UIViewController,WKNavigationDelegate {
+class HomeViewController: UIViewController,WKNavigationDelegate,Storyboarded {
+  
+    
     
     @IBOutlet var homeWebView: WKWebView!
     var generatedHtml : String?
     var receivedContent: String? = ""
+    var viewModel = HomeViewModel()
+    var categoriesCoordinator: CategoryCoordinator?
+
+    init(viewModel: HomeViewModel ) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+       super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let body = [ "limit" : 9,
                      "offset" : 6] as [String : Int]
         
@@ -61,6 +74,15 @@ class HomeViewController: UIViewController,WKNavigationDelegate {
         
         return resultString
     }
+    
+    
+    @IBAction func showCategories(sender: UIBarButtonItem) {
+        if let navigationController = self.navigationController {
+            categoriesCoordinator = CategoryCoordinator(navigationController: navigationController, categoris: [])
+        categoriesCoordinator?.start()
+        }
+    }
+        
     
 }
 
