@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appCoordinator = AppCoordinator(with: viewController)
             appCoordinator?.start()
         }
+        networkReachability()
+
         return true
     }
 
@@ -69,5 +71,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    func networkReachability(){
+        if !Reachability.isConnectedToNetwork(){
+            showErrorAlertView(title: NSLocalizedString("NO_INTERNET_TITLE", comment: ""), body: NSLocalizedString("NO_INTERNET_BODY_MESSAGE", comment: ""))
+        }
+    }
 }
 

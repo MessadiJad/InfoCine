@@ -14,12 +14,10 @@ final class CategoryCoordinator: Coordinator {
 
     init(navigationController: UINavigationController,categoris: [CategoryModel]) {
         self.navigationController = navigationController
-        let viewModel = CategoryViewModel()
         self.categoryViewController = CategoryViewController()
     }
 
-    deinit {
-    }
+    deinit { }
 
     func start() {
         

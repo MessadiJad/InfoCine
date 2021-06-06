@@ -1,0 +1,26 @@
+/* 
+ Localizable.strings
+ InfoCine
+ 
+ Created by Jad Messadi on 6/5/21.
+ 
+ */
+
+
+// Internet connection error strings
+"NO_INTERNET_TITLE" = "Pas de connexion Internet";
+"NO_INTERNET_BODY_MESSAGE" = "InfoCine nécessite une connexion Internet";
+
+//Buttons strings
+"ANNULER_BUTTON" = "Annuler";
+"OK_BUTTON" = "Ok";
+
+// SpinnerView strings
+"RETRY_BUTTON" = "Réessayer";
+
+//ErrorView strings
+"ERROR_TITLE" = "Erreur";
+"ERROR_BODY_ITEMS" = "Erreur lors de la récupération des éléments";
+"ERROR_TITLE_CATEGORY" = "Erreur lors de la récupération de la catégorie";
+"ERROR_GENERIC" = "Erreur générique";
+

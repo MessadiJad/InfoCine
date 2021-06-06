@@ -21,7 +21,17 @@ class CategoryViewController: UIViewController ,UISearchResultsUpdating, UISearc
     override func viewDidLoad() {
         
         viewModel.categorys.bind(to: self.categoryTableView.rx.items(cellIdentifier: "categoryCell", cellType: CategoryTableViewCell.self)) {row, model, cell  in
+            
+            switch row{
+                case 0: cell.categoryBg?.image = UIImage(named: "Actors")
+                case 1: cell.categoryBg?.image = UIImage(named: "Directors")
+                case 2: cell.categoryBg?.image = UIImage(named: "Producer")
+            default: break
+            }
+            cell.categoryBg?.contentMode = .scaleToFill
+            
             cell.titleLabel?.text = model.title
+
         }.disposed(by: self.viewModel.disposeBag)
         
         categoryTableView.rx.modelSelected(CategoryModel.self).subscribe(onNext : { choice in
