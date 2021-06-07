@@ -21,7 +21,8 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     var receivedContent: String? = ""
     var viewModel = HomeViewModel()
     var categoriesCoordinator: CategoryCoordinator?
-    
+    var detailsCoordinator: DetailsCoordinator?
+
     
     init(viewModel: HomeViewModel ) {
         self.viewModel = viewModel
@@ -32,7 +33,14 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
         super.init(coder: aDecoder)
     }
      
-    override func viewWillAppear(_ animated: Bool) {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+        homeWebView.navigationDelegate = self
+        homeWebView.uiDelegate = self
+        
         
         let preferences = WKPreferences()
         preferences.javaScriptEnabled = true
@@ -45,13 +53,6 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
         let request = URLRequest(url: url)
         
         homeWebView.load(request)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        homeWebView.navigationDelegate = self
-        homeWebView.uiDelegate = self
         
         fetchData()
         NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: Notification.Name("RetryServiceNotificationIdentifier"), object: nil)
@@ -104,6 +105,10 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "openDetails" {
             print(message.body)
+            if let navigationController = self.navigationController {
+                detailsCoordinator = DetailsCoordinator(navigationController: navigationController)
+                detailsCoordinator?.start()
+            }
         }
     }
 

@@ -19,7 +19,8 @@ class CategoryViewController: UIViewController ,UISearchResultsUpdating, UISearc
     
     
     override func viewDidLoad() {
-        
+        navigationController?.navigationBar.prefersLargeTitles = true
+
         viewModel.categorys.bind(to: self.categoryTableView.rx.items(cellIdentifier: "categoryCell", cellType: CategoryTableViewCell.self)) {row, model, cell  in
             
             switch row{

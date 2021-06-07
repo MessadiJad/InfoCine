@@ -36,7 +36,9 @@
 		E1E0A66A266C296C00B4C0B0 /* CategoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E0A669266C296C00B4C0B0 /* CategoryCoordinator.swift */; };
 		E1E0A672266C2A1900B4C0B0 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E0A671266C2A1900B4C0B0 /* HomeViewModel.swift */; };
 		E1E33668266E7E0200ABB455 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E33667266E7E0200ABB455 /* Storyboarded.swift */; };
-		E1F8996C266BE125007F5BCE /* Category.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1F8996B266BE125007F5BCE /* Category.storyboard */; };
+		E1E3367E266E99CA00ABB455 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3367C266E99CA00ABB455 /* DetailsViewController.swift */; };
+		E1E3367F266E99CA00ABB455 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3367D266E99CA00ABB455 /* DetailsViewModel.swift */; };
+		E1E33687266E9CD800ABB455 /* DetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E33686266E9CD800ABB455 /* DetailsCoordinator.swift */; };
 		E1F89978266BE28A007F5BCE /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F89976266BE28A007F5BCE /* CategoryTableViewCell.swift */; };
 		E1F89994266BE461007F5BCE /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F89993266BE461007F5BCE /* CategoryViewController.swift */; };
 		E1F89999266BE509007F5BCE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F89998266BE509007F5BCE /* Constants.swift */; };
@@ -102,7 +104,9 @@
 		E1E0A669266C296C00B4C0B0 /* CategoryCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCoordinator.swift; sourceTree = "<group>"; };
 		E1E0A671266C2A1900B4C0B0 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E1E33667266E7E0200ABB455 /* Storyboarded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Storyboarded.swift; path = ../../../../.Trashes/501/Storyboarded.swift; sourceTree = "<group>"; };
-		E1F8996B266BE125007F5BCE /* Category.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Category.storyboard; sourceTree = "<group>"; };
+		E1E3367C266E99CA00ABB455 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		E1E3367D266E99CA00ABB455 /* DetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
+		E1E33686266E9CD800ABB455 /* DetailsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsCoordinator.swift; sourceTree = "<group>"; };
 		E1F89976266BE28A007F5BCE /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		E1F89993266BE461007F5BCE /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		E1F89998266BE509007F5BCE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -189,9 +193,9 @@
 		E1606590266ADE910077EB02 /* InfoCine */ = {
 			isa = PBXGroup;
 			children = (
-				E1E33671266E8B2F00ABB455 /* Details */,
 				E1606591266ADE910077EB02 /* AppDelegate.swift */,
 				E1520EB3266CC6F200CE225A /* Localizable.strings */,
+				E1E33671266E8B2F00ABB455 /* Details */,
 				E144E3FA266C42CE00D8FF9F /* Utils */,
 				E1E0A65E266C292A00B4C0B0 /* Coordinator */,
 				E1F89975266BE279007F5BCE /* Category */,
@@ -250,6 +254,7 @@
 		E1E0A65E266C292A00B4C0B0 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				E1E33686266E9CD800ABB455 /* DetailsCoordinator.swift */,
 				E1E0A65F266C295400B4C0B0 /* AppCoordinator.swift */,
 				E1E0A664266C296300B4C0B0 /* HomeCoordinator.swift */,
 				E1E0A669266C296C00B4C0B0 /* CategoryCoordinator.swift */,
@@ -261,6 +266,8 @@
 		E1E33671266E8B2F00ABB455 /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				E1E3367C266E99CA00ABB455 /* DetailsViewController.swift */,
+				E1E3367D266E99CA00ABB455 /* DetailsViewModel.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -279,7 +286,6 @@
 		E1F89971266BE1FE007F5BCE /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				E1F8996B266BE125007F5BCE /* Category.storyboard */,
 				E1606597266ADE910077EB02 /* Main.storyboard */,
 				E160659F266ADE920077EB02 /* LaunchScreen.storyboard */,
 			);
@@ -407,7 +413,6 @@
 			files = (
 				E1520EB4266CC6F200CE225A /* Localizable.strings in Resources */,
 				E1CB66D4266D0A06002044E1 /* Script-functions.js in Resources */,
-				E1F8996C266BE125007F5BCE /* Category.storyboard in Resources */,
 				E16065A1266ADE920077EB02 /* LaunchScreen.storyboard in Resources */,
 				E160659E266ADE920077EB02 /* Assets.xcassets in Resources */,
 				E1520EC3266CCDCE00CE225A /* ListView.html in Resources */,
@@ -540,6 +545,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1E33687266E9CD800ABB455 /* DetailsCoordinator.swift in Sources */,
 				E1E0A66A266C296C00B4C0B0 /* CategoryCoordinator.swift in Sources */,
 				E160659C266ADE910077EB02 /* InfoCine.xcdatamodeld in Sources */,
 				E1520EAF266CC6D200CE225A /* Reachability.swift in Sources */,
@@ -550,12 +556,14 @@
 				E1E0A660266C295400B4C0B0 /* AppCoordinator.swift in Sources */,
 				E108032C266B696400DB5B51 /* APIRouter.swift in Sources */,
 				E1F89978266BE28A007F5BCE /* CategoryTableViewCell.swift in Sources */,
+				E1E3367F266E99CA00ABB455 /* DetailsViewModel.swift in Sources */,
 				E1F8999E266BE5CB007F5BCE /* CategoryViewModel.swift in Sources */,
 				E1606596266ADE910077EB02 /* HomeViewController.swift in Sources */,
 				E108030C266B67FE00DB5B51 /* Persons.swift in Sources */,
 				E1520EBE266CC7A200CE225A /* Extensions.swift in Sources */,
 				E1F89999266BE509007F5BCE /* Constants.swift in Sources */,
 				E1606592266ADE910077EB02 /* AppDelegate.swift in Sources */,
+				E1E3367E266E99CA00ABB455 /* DetailsViewController.swift in Sources */,
 				E1080327266B692000DB5B51 /* Environment.swift in Sources */,
 				E1F89994266BE461007F5BCE /* CategoryViewController.swift in Sources */,
 				E1080331266B6B7300DB5B51 /* API.swift in Sources */,

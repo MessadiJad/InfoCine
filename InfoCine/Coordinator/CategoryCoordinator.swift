@@ -21,8 +21,10 @@ final class CategoryCoordinator: Coordinator {
 
     func start() {
         
-        let categoryVC = CategoryViewController.instantiate(with: .Category)
-        self.navigationController.present(categoryVC, animated: true, completion: nil)
+        let categoryVC = CategoryViewController.instantiate(with: .Main)
+        let navigationControlr = UINavigationController(rootViewController: categoryVC)
+
+        self.navigationController.present(navigationControlr, animated: true, completion: nil)
     }
 
 }

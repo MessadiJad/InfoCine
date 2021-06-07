@@ -19,7 +19,7 @@ function createTable(tableData) {
  
       var imageRow = document.createElement('td');
         imageRow.onclick = function() {
-        window.webkit.messageHandlers.openDetails.postMessage('teest');
+        window.webkit.messageHandlers.openDetails.postMessage('details opened');
         }
 
         var imageView = document.createElement('img');
