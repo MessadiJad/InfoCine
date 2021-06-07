@@ -9,7 +9,9 @@ import UIKit
 import WebKit
 
 
-class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Storyboarded {
+class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Storyboarded, WKScriptMessageHandler {
+    
+    
     
     @IBOutlet var homeWebView: WKWebView!
     let contentController = WKUserContentController()
@@ -84,11 +86,25 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         viewModel.personsBehavior.subscribe{ element in
             let value = element.map{ return $0 }
-            if let fullname = value.element?.fullname, let birthdate = value.element?.commentaire{
-                self.homeWebView.evaluateJavaScript("createTable([['\(fullname)'], ['\(birthdate)']]);")
+            if let fullname = value.element?.fullname, let desc = value.element?.commentaire{
+                let imageUrl = "https://cinemaone.net/images/movie_placeholder.png"
+                self.homeWebView.evaluateJavaScript("createTable([['https://cinemaone.net/images/movie_placeholder.png','\(fullname)','\(desc)']]);")
             }            
         }.disposed(by: viewModel.disposeBag)
 
+        userControllerList(webView)
+    }
+    
+    func userControllerList(_ webView : WKWebView) {
+            let userController = webView.configuration.userContentController
+            userController.removeScriptMessageHandler(forName: "openDetails")
+            userController.add(self, name: "openDetails")
+    }
+    
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "openDetails" {
+            print(message.body)
+        }
     }
 
     @IBAction func showCategories(sender: UIBarButtonItem) {

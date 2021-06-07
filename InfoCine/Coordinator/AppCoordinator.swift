@@ -23,9 +23,9 @@ final class AppCoordinator {
     
     func start() {
         
-        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
-        tabBarCoordinator.start()
-        childCoordinators.append(tabBarCoordinator)
+        let homeCoordinator = HomeCoordinator(navigationController: navigationController)
+        homeCoordinator.start()
+        childCoordinators.append(homeCoordinator)
     }
     
 }

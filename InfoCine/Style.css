@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-color: #154862;
+  background-color: F5F5F7;
   display: grid;
   height: 100vh;
   place-items: center;
@@ -10,16 +10,26 @@ body {
   box-sizing: border-box;
 }
 
-/* Create two equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 100%;
-  padding: 10px;
+table {
+border: medium solid #fff;
+width: 100%;
+}
+td {
+width: 50%;
+
+}
+tr {
+width: 50%;
+margin: 50px;
+
+}
+img {
+    border: 1px solid #ddd;
+      border-radius: 4px;
 }
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+hr {
+    width:50%;
+    text-align:left;
+    margin-left:0
 }
