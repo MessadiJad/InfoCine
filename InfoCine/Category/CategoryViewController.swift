@@ -37,8 +37,8 @@ class CategoryViewController: UIViewController ,UISearchResultsUpdating, UISearc
         
         categoryTableView.rx.modelSelected(CategoryModel.self).subscribe(onNext : { choice in
             
-            self.viewModel.selectCategory(with: choice)
-            
+            self.viewModel.filter(controller: self, category_id: choice.category_id)
+
             self.dismiss(animated: true, completion: nil)
         }).disposed(by: self.viewModel.disposeBag)
         

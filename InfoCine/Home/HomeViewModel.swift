@@ -9,9 +9,12 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-class HomeViewModel {
+class HomeViewModel: FilterViewControllerDelegate {
+
     
     let personsBehavior = PublishSubject<Persons>()
+    let routes = PublishSubject<APIRouter>()
+
     let disposeBag = DisposeBag()
 
     static let selectedCategoryBehavior = BehaviorRelay<CategoryModel>(value: CategoryModel.empty)
@@ -32,6 +35,16 @@ class HomeViewModel {
         }
                 
     }
-            
+      
+    func filterd(_ controller: CategoryViewController, category_id: Int?) {        
+        switch category_id {
+            case 0:routes.onNext(APIRouter.actors)
+            case 1:routes.onNext(APIRouter.directors)
+            case 2:routes.onNext(APIRouter.producers)
+        default:
+            break
+        }
+    }
+    
     
 }

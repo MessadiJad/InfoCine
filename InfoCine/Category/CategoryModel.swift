@@ -9,11 +9,11 @@ import Foundation
 
 class CategoryModel {
     
-    var id: Int?
+    var category_id: Int?
     var title: String?
     
-    init(id: Int, title: String) {
-        self.id = id
+    init(category_id: Int, title: String) {
+        self.category_id = category_id
         self.title = title
     }
 }
@@ -21,6 +21,6 @@ class CategoryModel {
 
 extension CategoryModel {
     static var empty: CategoryModel {
-        return CategoryModel(id:0, title:"")
+        return CategoryModel(category_id:0, title:"")
     }
 }

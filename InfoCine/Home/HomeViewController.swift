@@ -20,7 +20,7 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     var generatedHtml : String?
     var receivedContent: String? = ""
     var viewModel = HomeViewModel()
-    var categoriesCoordinator: CategoryCoordinator?
+    var categoryCoordinator: CategoryCoordinator?
     var detailsCoordinator: DetailsCoordinator?
 
     
@@ -63,16 +63,20 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
         let body = [ "limit" : 9,
                      "offset" : 6] as [String : Int]
         
-        API.shared.service(from: body, router: .home) { result in
-            switch result {
-            case .fail(_):
-                print("fail")
-            case .success(let data):
-                print("success")
-                self.viewModel.show(with: data)
-                
+        viewModel.routes.subscribe{ route in
+            API.shared.service(from: body, router: route) { result in
+                switch result {
+                case .fail(_):
+                    print("fail")
+                case .success(let data):
+                    print("success")
+                    self.viewModel.show(with: data)
+                    
+                }
             }
-        }
+        }.disposed(by: viewModel.disposeBag)
+        
+     
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
@@ -114,8 +118,10 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
 
     @IBAction func showCategories(sender: UIBarButtonItem) {
         if let navigationController = self.navigationController {
-            categoriesCoordinator = CategoryCoordinator(navigationController: navigationController, categoris: [])
-            categoriesCoordinator?.start()
+            categoryCoordinator = CategoryCoordinator(navigationController: navigationController, categoris: [])
+      //      categoryCoordinator?.categoryViewController.viewModel.delegate =  self.viewModel
+
+            categoryCoordinator?.start()
         }
     }
     
