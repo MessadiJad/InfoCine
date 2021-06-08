@@ -145,6 +145,9 @@
                     <navigationItem key="navigationItem" title="Category" largeTitleDisplayMode="always" id="AfF-rj-0RH">
                         <barButtonItem key="rightBarButtonItem" image="xmark" catalog="system" id="SGa-Wh-u2O">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="close" destination="lFw-Bi-yHS" id="Epf-Nq-tQf"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

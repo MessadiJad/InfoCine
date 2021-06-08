@@ -19,10 +19,8 @@ class DetailsViewController: UIViewController, Storyboarded {
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
         self.title = "Details"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
-        self.navigationController?.navigationBar.tintColor = .black
+
     }
 
    

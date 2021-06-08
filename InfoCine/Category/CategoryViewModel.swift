@@ -13,28 +13,15 @@ protocol FilterViewControllerDelegate:class {
     func filterd(_ controller: CategoryViewController, category_id: Int?)
 }
 
-
 class CategoryViewModel {
-     var delegate: FilterViewControllerDelegate?
-
     
-    func filter (controller: CategoryViewController, category_id:Int?) {
-        delegate = HomeViewModel()
-        delegate?.filterd(controller, category_id: category_id)
-    }
-
     let categorys = BehaviorRelay<[CategoryModel]>(value: [])
-    
-    static let selectedCategoryBehavior = BehaviorRelay<CategoryModel>(value: CategoryModel.empty)
-    var selectedCategoryObservable : Observable<CategoryModel> {
-        return CategoryViewModel.selectedCategoryBehavior.asObservable()
-    }
-    
     let listOfCategory = [
         CategoryModel(category_id: 0, title:"Actors"),
         CategoryModel(category_id: 1, title:"Directors"),
         CategoryModel(category_id: 2, title:"Producers")
     ]
+    var delegate: FilterViewControllerDelegate?
     let disposeBag = DisposeBag()
     
     init() {
@@ -42,11 +29,12 @@ class CategoryViewModel {
     }
     
     func fetchCategoryList() {
-        
         categorys.accept(listOfCategory)
     }
-    
-    func selectCategory(with choice : CategoryModel) {
-        CategoryViewModel.selectedCategoryBehavior.accept(choice)
+     
+    func filter (controller: CategoryViewController, category_id:Int?) {
+        delegate = HomeViewModel()
+        delegate?.filterd(controller, category_id: category_id)
     }
+
 }

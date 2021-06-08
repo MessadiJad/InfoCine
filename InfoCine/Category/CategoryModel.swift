@@ -18,7 +18,6 @@ class CategoryModel {
     }
 }
 
-
 extension CategoryModel {
     static var empty: CategoryModel {
         return CategoryModel(category_id:0, title:"")

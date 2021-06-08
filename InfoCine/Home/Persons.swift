@@ -58,7 +58,6 @@ class Persons: Decodable {
     }
 }
 
-
 extension HomeResult {
     static var empty: HomeResult {
         return HomeResult(path: "", persons: [], limit:"", offset: 0)

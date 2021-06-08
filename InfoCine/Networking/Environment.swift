@@ -10,16 +10,16 @@ class Environment {
     
     static let server:Server = .developement
     
-    class func APIBasePath() -> String {
+    class func APIBaseURL() -> String {
         switch self.server {
         case .developement:
             return "https://ba-api.lpnt.fr"
         }
     }
     
-    static func urlType(_ type: APIRouter, limit:Int, offset: Int) -> URL? {
+    static func urlType(_ type: APIRouter, limit:Int, offset: Int, idPeron:Int, idFilm: Int) -> URL? {
         let baseURL:String = {
-            return Environment.APIBasePath()
+            return Environment.APIBaseURL()
         }()
         
         let relativePath: String? = {
@@ -27,13 +27,17 @@ class Environment {
             case .home:
                 return "/rubrique/home/limit/\(limit)/offset/\(offset)"
             case .actors:
-                return "/rubrique/acteurs/limit/2/offset/6"
+                return "/rubrique/acteurs/limit/\(limit)/offset/\(offset)"
             case .directors:
-                return "/rubrique/directeurs/limit/2/offset/6"
+                return "/rubrique/directeurs/limit/\(limit)/offset/\(offset)"
             case .producers:
-                return "/rubrique/producteurs/limit/2/offset/6"
+                return "/rubrique/producteurs/limit/\(limit)/offset/\(offset)"
             case .person:
-                return "/personne/3020"
+                return "/personne/\(idPeron)"
+            case .imagesPerson:
+                return "/public/images/personne/\(idPeron)"
+            case .imagesFilm:
+                return "/public/images/film/\(idFilm)"
             }
         }()
         

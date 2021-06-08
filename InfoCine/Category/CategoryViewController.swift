@@ -9,18 +9,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CategoryViewController: UIViewController ,UISearchResultsUpdating, UISearchBarDelegate, Storyboarded {
-    
-    
-    
+class CategoryViewController: BaseViewController, Storyboarded {
+       
     @IBOutlet weak var categoryTableView : UITableView!
-
     let viewModel = CategoryViewModel()
-    
-    
+        
     override func viewDidLoad() {
         navigationController?.navigationBar.prefersLargeTitles = true
-
         viewModel.categorys.bind(to: self.categoryTableView.rx.items(cellIdentifier: "categoryCell", cellType: CategoryTableViewCell.self)) {row, model, cell  in
             
             switch row{
@@ -29,8 +24,6 @@ class CategoryViewController: UIViewController ,UISearchResultsUpdating, UISearc
                 case 2: cell.categoryBg?.image = UIImage(named: "Producer")
             default: break
             }
-            cell.categoryBg?.contentMode = .scaleToFill
-            
             cell.titleLabel?.text = model.title
 
         }.disposed(by: self.viewModel.disposeBag)
@@ -38,8 +31,7 @@ class CategoryViewController: UIViewController ,UISearchResultsUpdating, UISearc
         categoryTableView.rx.modelSelected(CategoryModel.self).subscribe(onNext : { choice in
             
             self.viewModel.filter(controller: self, category_id: choice.category_id)
-
-            self.dismiss(animated: true, completion: nil)
+            self.close()
         }).disposed(by: self.viewModel.disposeBag)
         
         categoryTableView.tableFooterView = UIView()
@@ -49,11 +41,10 @@ class CategoryViewController: UIViewController ,UISearchResultsUpdating, UISearc
         
         viewModel.fetchCategoryList()
     }
-   
-    func updateSearchResults(for searchController: UISearchController) {
-        
+  
+    @IBAction func close() {
+        self.dismiss(animated: true, completion: nil)
     }
-    
 }
 
 extension CategoryViewController: UITableViewDelegate {

@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 
 
-class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Storyboarded, WKScriptMessageHandler {
+class HomeViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate,Storyboarded, WKScriptMessageHandler {
     
     
     
@@ -36,7 +36,6 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
 
         homeWebView.navigationDelegate = self
         homeWebView.uiDelegate = self
@@ -54,16 +53,20 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
         
         homeWebView.load(request)
         
-        fetchData()
+       
         NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: Notification.Name("RetryServiceNotificationIdentifier"), object: nil)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fetchData()
     }
     
     @objc func fetchData() {
         let body = [ "limit" : 9,
                      "offset" : 6] as [String : Int]
         
-        viewModel.routes.subscribe{ route in
+        viewModel.routes.subscribe(onNext: { route in
             API.shared.service(from: body, router: route) { result in
                 switch result {
                 case .fail(_):
@@ -71,10 +74,9 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
                 case .success(let data):
                     print("success")
                     self.viewModel.show(with: data)
-                    
                 }
             }
-        }.disposed(by: viewModel.disposeBag)
+        }).disposed(by: viewModel.disposeBag)
         
      
     }
