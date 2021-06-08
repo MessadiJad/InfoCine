@@ -63,3 +63,10 @@ extension HomeResult {
         return HomeResult(path: "", persons: [], limit:"", offset: 0)
     }
 }
+
+
+extension Persons {
+    static var empty: Persons {
+        return Persons(id: 0, idPerson: 0, fullname: "", urldbpedia: "", date_naissance: "", commentaire: "", code: "", lastname: "", path: "", img: "")
+    }
+}

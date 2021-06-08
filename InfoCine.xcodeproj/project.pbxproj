@@ -31,6 +31,8 @@
 		E16065B7266ADE930077EB02 /* InfoCineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16065B6266ADE930077EB02 /* InfoCineUITests.swift */; };
 		E16065D9266AE24D0077EB02 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E16065D8266AE24D0077EB02 /* WebKit.framework */; };
 		E182EAB9266F52FC00586CBE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E182EAB8266F52FC00586CBE /* BaseViewController.swift */; };
+		E182EAC9266FD61000586CBE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E182EAC8266FD61000586CBE /* Utils.swift */; };
+		E182EACE266FF96D00586CBE /* DetailsPersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E182EACD266FF96D00586CBE /* DetailsPersonModel.swift */; };
 		E1CB66D4266D0A06002044E1 /* Script-functions.js in Resources */ = {isa = PBXBuildFile; fileRef = E1CB66D3266D0A06002044E1 /* Script-functions.js */; };
 		E1E0A660266C295400B4C0B0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E0A65F266C295400B4C0B0 /* AppCoordinator.swift */; };
 		E1E0A665266C296300B4C0B0 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E0A664266C296300B4C0B0 /* HomeCoordinator.swift */; };
@@ -100,6 +102,8 @@
 		E16065B8266ADE930077EB02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E16065D8266AE24D0077EB02 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		E182EAB8266F52FC00586CBE /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		E182EAC8266FD61000586CBE /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		E182EACD266FF96D00586CBE /* DetailsPersonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPersonModel.swift; sourceTree = "<group>"; };
 		E1CB66D3266D0A06002044E1 /* Script-functions.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "Script-functions.js"; sourceTree = "<group>"; };
 		E1E0A65F266C295400B4C0B0 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E1E0A664266C296300B4C0B0 /* HomeCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 				E1520EB8266CC77000CE225A /* SpinnerView.swift */,
 				E1520EA9266CC66500CE225A /* ErrorAlertView.swift */,
 				E1F89998266BE509007F5BCE /* Constants.swift */,
+				E182EAC8266FD61000586CBE /* Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -271,6 +276,7 @@
 			children = (
 				E1E3367C266E99CA00ABB455 /* DetailsViewController.swift */,
 				E1E3367D266E99CA00ABB455 /* DetailsViewModel.swift */,
+				E182EACD266FF96D00586CBE /* DetailsPersonModel.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -553,6 +559,7 @@
 				E160659C266ADE910077EB02 /* InfoCine.xcdatamodeld in Sources */,
 				E1520EAF266CC6D200CE225A /* Reachability.swift in Sources */,
 				E1520EAA266CC66500CE225A /* ErrorAlertView.swift in Sources */,
+				E182EAC9266FD61000586CBE /* Utils.swift in Sources */,
 				E1F899A3266BE63F007F5BCE /* CategoryModel.swift in Sources */,
 				E1E0A672266C2A1900B4C0B0 /* HomeViewModel.swift in Sources */,
 				E1520EB9266CC77000CE225A /* SpinnerView.swift in Sources */,
@@ -567,6 +574,7 @@
 				E1F89999266BE509007F5BCE /* Constants.swift in Sources */,
 				E1606592266ADE910077EB02 /* AppDelegate.swift in Sources */,
 				E1E3367E266E99CA00ABB455 /* DetailsViewController.swift in Sources */,
+				E182EACE266FF96D00586CBE /* DetailsPersonModel.swift in Sources */,
 				E1080327266B692000DB5B51 /* Environment.swift in Sources */,
 				E182EAB9266F52FC00586CBE /* BaseViewController.swift in Sources */,
 				E1F89994266BE461007F5BCE /* CategoryViewController.swift in Sources */,

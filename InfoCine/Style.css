@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-color: F5F5F7;
+  background-color: #000;
   display: grid;
   height: 100vh;
   place-items: center;
@@ -11,7 +11,7 @@ body {
 }
 
 table {
-border: medium solid #fff;
+border: medium solid #000;
 width: 100%;
 }
 td {
@@ -32,4 +32,12 @@ hr {
     width:50%;
     text-align:left;
     margin-left:0
+}
+
+p {
+    color:#fff;
+}
+
+h3 {
+    color:#B7312C;
 }

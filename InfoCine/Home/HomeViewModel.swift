@@ -10,13 +10,72 @@ import RxCocoa
 import RxSwift
 
 class HomeViewModel: FilterViewControllerDelegate {
+    func filterd(_ controller: CategoryViewController, category_id: Int?) {
+        switch category_id {
+        case 0: routesSubject.onNext(.actors)
+        case 1: routesSubject.onNext(.directors)
+        case 2: routesSubject.onNext(.producers)
+        default:
+            break
+        }
+      fetchData()
+    }
+
 
     let personsBehavior = PublishSubject<Persons>()
-    let routes = BehaviorRelay(value: APIRouter.home)
+    let personBehavior = PublishSubject<PersonContent>()
 
+    let routesSubject = BehaviorSubject<APIRouter>(value: .home)
     let disposeBag = DisposeBag()
 
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.fetchData), name: Notification.Name("RetryServiceNotificationIdentifier"), object: nil)
+    }
+    
   
+    @objc func fetchData() {
+         
+        let body = [ "limit" : 2,
+                     "offset" : 6] as [String : Int]
+    
+        routesSubject.subscribe(onNext: { [weak self] route in
+                        
+            guard let self = self else {return}
+            API.shared.service(from: body, router: route) { result in
+                switch result {
+                case .fail(_):
+                    print("fail")
+                case .success(let data):
+                    print("success")
+                    self.show(with: data)
+                }
+            }
+      
+        }).disposed(by: disposeBag)
+
+    }
+    
+    @objc func fetchPerson() {
+         
+ 
+        routesSubject.subscribe(onNext: { [weak self] route in
+                        
+            guard let self = self else {return}
+            
+            API.shared.detailService(router: route) { (result) in
+                switch result {
+                case .fail(_):
+                    print("fail")
+                case .success(let data):
+                    print("success")
+                    self.showPerson(with: data)
+                }
+            }
+            
+        }).disposed(by: disposeBag)
+
+    }
+
     
     func show(with data: Data) {
         do {
@@ -28,16 +87,22 @@ class HomeViewModel: FilterViewControllerDelegate {
                 personsBehavior.onNext(person)
             }
         } catch { print("error") }
-                
     }
-      
-    func filterd(_ controller: CategoryViewController, category_id: Int?) {        
-        switch category_id {
-            case 0:routes.accept(APIRouter.actors)
-            case 1:routes.accept(APIRouter.directors)
-            case 2:routes.accept(APIRouter.producers)
-        default: break
-        }
+    
+    
+    func showPerson(with data: Data) {
+        do {
+         let decoder = JSONDecoder()
+         decoder.keyDecodingStrategy = .convertFromSnakeCase
+         let results = try decoder.decode(DetailsPersonResult.self, from: data)
+            let details = results.content
+                personBehavior.onNext(details)
+            
+        } catch { print("error") }
     }
-        
+    
+    
+    
+    
 }
+

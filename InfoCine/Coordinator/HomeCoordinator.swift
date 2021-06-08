@@ -14,8 +14,7 @@ final class HomeCoordinator: Coordinator {
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        let viewModel = HomeViewModel()
-        self.homeViewController = HomeViewController(viewModel: viewModel)
+        self.homeViewController = HomeViewController()
     }
     
     deinit { }

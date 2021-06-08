@@ -20,8 +20,10 @@ final class DetailsCoordinator: Coordinator {
     deinit {
     }
 
-    func start() {
+    func start(person: PersonContent) {
         let detailsVC = DetailsViewController.instantiate(with: .Main)
+        detailsVC.viewModel.getData(person: person)
+
         navigationController.show(detailsVC, sender: self)
     }
 

@@ -23,7 +23,7 @@ final class CategoryCoordinator: Coordinator {
         
         let categoryVC = CategoryViewController.instantiate(with: .Main)
         let navigationControlr = UINavigationController(rootViewController: categoryVC)
-
+        navigationControlr.modalPresentationStyle = .fullScreen
         self.navigationController.present(navigationControlr, animated: true, completion: nil)
     }
 

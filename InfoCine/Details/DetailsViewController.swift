@@ -10,19 +10,18 @@ import UIKit
 class DetailsViewController: UIViewController, Storyboarded {
     
     var viewModel = DetailsViewModel()
-    var scrollView = UIScrollView()
-    let itemImageView = UIImageView()
-    let itemNameLabel = UILabel()
-    let itemDateLabel = UILabel()
-    let itemDescriptionLabel = UILabel()
+
+  
+   
     
- 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Details"
-
-    }
+        viewModel.personSubjectObservable.subscribe(onNext: { details in
+            self.title = details.nom
+        }).disposed(by: viewModel.disposeBag)
 
    
+
+}
 
 }

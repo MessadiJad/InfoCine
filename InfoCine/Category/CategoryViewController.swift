@@ -52,4 +52,9 @@ extension CategoryViewController: UITableViewDelegate {
             let count = viewModel.categorys.value.count
             return tableView.frame.height / CGFloat(count)
         }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        Utils.shared.card(with: cell)
+    }
 }

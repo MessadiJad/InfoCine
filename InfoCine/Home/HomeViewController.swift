@@ -7,7 +7,8 @@
 
 import UIKit
 import WebKit
-
+import RxSwift
+import RxCocoa
 
 class HomeViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate,Storyboarded, WKScriptMessageHandler {
     
@@ -19,20 +20,17 @@ class HomeViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate,S
     
     var generatedHtml : String?
     var receivedContent: String? = ""
-    var viewModel = HomeViewModel()
+    private let viewModel = HomeViewModel()
     var categoryCoordinator: CategoryCoordinator?
     var detailsCoordinator: DetailsCoordinator?
+    var detailsViewController: DetailsViewModel?
 
     
-    init(viewModel: HomeViewModel ) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-     
+    let spinnerView = SpinnerView()
+
+    let disposeBag = DisposeBag()
+
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,40 +44,26 @@ class HomeViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate,S
         
         configuration.preferences = preferences
         configuration.userContentController = contentController
-        
+      
         let url = Bundle.main.url(forResource: "ListView", withExtension: "html")!
         homeWebView.loadFileURL(url, allowingReadAccessTo: url)
         let request = URLRequest(url: url)
-        
         homeWebView.load(request)
         
-       
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: Notification.Name("RetryServiceNotificationIdentifier"), object: nil)
-        
+        viewModel.fetchData()
+ 
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        fetchData()
+    override func viewDidAppear(_ animated: Bool) {
+        spinnerView.show(uiView: self.view)
+
+       self.homeWebView.evaluateJavaScript("clearTable();")
+
+        self.homeWebView.reload()
+
     }
+  
     
-    @objc func fetchData() {
-        let body = [ "limit" : 9,
-                     "offset" : 6] as [String : Int]
-        
-        viewModel.routes.subscribe(onNext: { route in
-            API.shared.service(from: body, router: route) { result in
-                switch result {
-                case .fail(_):
-                    print("fail")
-                case .success(let data):
-                    print("success")
-                    self.viewModel.show(with: data)
-                }
-            }
-        }).disposed(by: viewModel.disposeBag)
-        
-     
-    }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         homeWebView.injectJS(resource: "Script-functions", type: "js")
@@ -91,14 +75,17 @@ class HomeViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate,S
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.homeWebView.evaluateJavaScript("createTable();")
         viewModel.personsBehavior.subscribe{ element in
             let value = element.map{ return $0 }
-            if let fullname = value.element?.fullname, let desc = value.element?.commentaire{
-                let imageUrl = "https://cinemaone.net/images/movie_placeholder.png"
-                self.homeWebView.evaluateJavaScript("createTable([['https://cinemaone.net/images/movie_placeholder.png','\(fullname)','\(desc)']]);")
-            }            
+            if let imageUrl = value.element?.img, let fullname = value.element?.fullname, let desc = value.element?.commentaire{
+                if value.element != nil {
+                    self.spinnerView.hide()
+                    self.homeWebView.evaluateJavaScript("fillTable([['\(imageUrl)','\(fullname)','\(desc)']]);")
+                }
+              
+            }
         }.disposed(by: viewModel.disposeBag)
-
         userControllerList(webView)
     }
     
@@ -110,19 +97,33 @@ class HomeViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate,S
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "openDetails" {
+            viewModel.routesSubject.onNext(.person)
             print(message.body)
             if let navigationController = self.navigationController {
-                detailsCoordinator = DetailsCoordinator(navigationController: navigationController)
-                detailsCoordinator?.start()
+               
+                viewModel.fetchPerson()
+                
+                viewModel.personBehavior.subscribe({ person in
+                    self.detailsCoordinator = DetailsCoordinator(navigationController: navigationController)
+                    if let personC = person.element {
+                        self.detailsCoordinator?.start(person :personC )
+
+                    }
+                    
+                }).disposed(by: viewModel.disposeBag)
+            
+                    }
+                 
+
+
             }
         }
-    }
+    
 
     @IBAction func showCategories(sender: UIBarButtonItem) {
         if let navigationController = self.navigationController {
             categoryCoordinator = CategoryCoordinator(navigationController: navigationController, categoris: [])
       //      categoryCoordinator?.categoryViewController.viewModel.delegate =  self.viewModel
-
             categoryCoordinator?.start()
         }
     }

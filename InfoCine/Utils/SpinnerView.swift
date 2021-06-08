@@ -13,12 +13,13 @@ class SpinnerView {
     var containerView = UIView()
     var retryButton = UIButton()
     var currentWindow: UIWindow?
-    
+    var timer = Timer()
+
     func setup(uiView: UIView){
         
         if let currentWindow = UIApplication.shared.windows.filter({$0.isKeyWindow}).first {
             currentWindow.addSubview(containerView)
-            if !Reachability.isConnectedToNetwork() {
+            if !Reachability.isConnectedToNetwork(){
                 currentWindow.addSubview(retryButton)
                 retryButton.anchor(top: nil, left: nil, bottom: currentWindow.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 50, paddingRight: 0, width: 100, height: 40, enableInsets: false)
                 retryButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
@@ -43,6 +44,9 @@ class SpinnerView {
         retryButton.setTitleColor(.black, for: .highlighted)
         
         retryButton.layer.cornerRadius = 20
+        
+        timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(postRetryService), userInfo: nil, repeats: true)
+
     }
     
     func show(uiView: UIView) {
@@ -58,6 +62,8 @@ class SpinnerView {
         containerView.removeFromSuperview()
         spinner.removeFromSuperview()
         retryButton.removeFromSuperview()
+        timer.invalidate()
+
     }
     
     func isHidden() -> Bool{
@@ -71,5 +77,6 @@ class SpinnerView {
     
     @objc func postRetryService() {
         NotificationCenter.default.post(name: Notification.Name("RetryServiceNotificationIdentifier"), object: nil)
+        timer.invalidate()
     }
 }
