@@ -24,33 +24,41 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.personSubjectObservable.subscribe(onNext: { details in
-            if let ActorName = details.nom {
-                self.setupNavigationBar(with: ActorName)
+        
+        
+        viewModel.personSubject.subscribe(onNext: { details in
+           
+            self.commentaireLbl.text = details.commentaire
+            if let namePerson = details.nom {
+                self.title = namePerson
+                self.setupNavigationBar(with: namePerson)
             }
             self.urldbpediaLbl.text = details.url_dbpedia
             self.professionLbl.text = details.profession
             self.lieu_naissanceLbl.text = details.lieu_naissance
-            self.commentaireLbl.text = details.commentaire
             self.nationaliteLbl.text = details.nationalite
             if let thumbImageUrl = details.photo {
                 self.setupImageItem(imageUrl: thumbImageUrl)
             }
+            
+            
+//            let items = Observable.just(Array(arrayLiteral: details.movies.content))
+//
+//            items.asObservable().bind(to: self.moviesCollectionView.rx.items(cellIdentifier: "MovieCollectionCell", cellType: MovieCollectionCell.self)) { row, data, cell in
+//                cell.movieTitle.text = data?.title
+//            }.disposed(by: self.viewModel.disposeBag)
+
+            
         }).disposed(by: viewModel.disposeBag)
         
-        
-        let items = Observable.just(
-            (0..<5).map{ "Test \($0)" }
-        )
-        
-        items.asObservable().bind(to: self.moviesCollectionView.rx.items(cellIdentifier: "MovieCollectionCell", cellType: MovieCollectionCell.self)) { row, data, cell in
-            cell.movieTitle.text = data
-        }.disposed(by: viewModel.disposeBag)
-
         moviesCollectionView.rx.setDelegate(self).disposed(by: viewModel.disposeBag)
     
 
 }
+    
+    override func viewWillAppear(_ animated: Bool) {
+       
+    }
     
     func setupImageItem(imageUrl: String) {
         personImageView.contentMode = .scaleToFill

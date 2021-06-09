@@ -12,8 +12,6 @@ protocol NavBarCustomed:class {
 
 }
 
-
-
 extension NavBarCustomed where Self: UIViewController {
 
     func setupNavigationBar(with title: String) {
@@ -27,5 +25,6 @@ extension NavBarCustomed where Self: UIViewController {
         if #available(iOS 13.0, *) {
             navigationController?.navigationBar.largeContentTitle = title
         }
+
 }
 }

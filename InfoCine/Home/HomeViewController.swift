@@ -29,7 +29,9 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationBar(with: "Home")
+        self.title = "Home"
+        self.setupNavigationBar(with: "Home")
+  
         homeWebView.navigationDelegate = self
         homeWebView.uiDelegate = self
         
@@ -92,7 +94,7 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
                 if let str = message.body as? String {
                         viewModel.fetchDetailsPerson(idPeron: str, completion: { (result) in
                         self.detailsCoordinator = DetailsCoordinator(navigationController: navigationController)
-                        self.detailsCoordinator?.start(person :result)
+                        self.detailsCoordinator?.start(details: result)
                     })
                 }
             }

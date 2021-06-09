@@ -18,9 +18,12 @@ class DetailsViewModel {
       
     let disposeBag = DisposeBag()
     
-    func getData(person: PersonContent) {
-       personSubject.accept(person)
+    func getData(details: DetailsPersonResult) {
+        personSubject.accept(details.content)
     }
 
+    
+    
+    
 }
     

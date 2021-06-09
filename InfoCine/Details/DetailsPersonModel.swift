@@ -15,7 +15,6 @@ struct DetailsPersonResult: Decodable {
     let title : String
     let type : String
     let suppression : Int
-
 }
 
 class PersonContent: Decodable {
@@ -28,7 +27,7 @@ class PersonContent: Decodable {
     var profession: String?
     var date_naissance: Int?
     var photo: String?
-    
+
     
     init(nom: String, url_dbpedia: String, lieu_naissance: String, nationalite: String, commentaire: String, profession: String, date_naissance: Int, photo: String) {
         self.nom = nom
@@ -39,7 +38,7 @@ class PersonContent: Decodable {
         self.profession = profession
         self.date_naissance = date_naissance
         self.photo = photo
-  
+
 }
 
     enum CodingKeys: String, CodingKey   {
@@ -55,7 +54,6 @@ class PersonContent: Decodable {
    }
 
 }
-
 extension PersonContent {
     static var empty: PersonContent {
         return PersonContent(nom: "", url_dbpedia: "", lieu_naissance: "", nationalite: "", commentaire: "", profession: "", date_naissance: 0, photo: "")

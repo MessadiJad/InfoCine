@@ -41,7 +41,7 @@ class HomeViewModel: CategoryDelegate {
 
     }
     
-    func fetchDetailsPerson(idPeron: String, completion: @escaping (PersonContent) -> Void){
+    func fetchDetailsPerson(idPeron: String, completion: @escaping (DetailsPersonResult) -> Void){
         
         routesSubject.take(1).subscribe{ route in
             API.shared.detailService(router: route, idPeron: idPeron) { (result) in
@@ -73,18 +73,19 @@ class HomeViewModel: CategoryDelegate {
         
     }
     
-   private func decodeDetailsPerson(with data: Data) -> PersonContent? {
+   private func decodeDetailsPerson(with data: Data) -> DetailsPersonResult? {
         do {
          let decoder = JSONDecoder()
          decoder.keyDecodingStrategy = .convertFromSnakeCase
          let results = try decoder.decode(DetailsPersonResult.self, from: data)
-            return results.content
+            return results
         } catch {
             showErrorAlertView(title: NSLocalizedString("ERROR_TITLE", comment: ""), body: NSLocalizedString("ERROR_BODY_ITEMS", comment: ""))
         }
         return nil
     }
      
+    
     func categorySelected(_ controller: CategoryViewController, category_id: Int?) {
         switch category_id {
             case 0: routesSubject.onNext(.actors)

@@ -23,7 +23,6 @@ class API {
     
         AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
             .responseJSON { response  in
-                print(response)
                  switch response.response?.statusCode {
                  case 200: completion(.success(response.data!))
                  default: completion(.fail)
