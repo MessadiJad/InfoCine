@@ -81,4 +81,8 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
         }
         return UICollectionReusableView()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationItem.title = "Home"
+    }
 }

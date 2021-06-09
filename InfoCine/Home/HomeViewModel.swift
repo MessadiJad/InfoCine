@@ -9,14 +9,25 @@ import Foundation
 import RxCocoa
 import RxSwift
 
+protocol CategoryDelegate:class {
+    func categorySelected(_ controller: HomeViewController, category_id: Int?)
+}
+
 class HomeViewModel: CategoryDelegate {
  
     let personsBehavior = PublishSubject<Persons>()
     let routesSubject = BehaviorSubject<APIRouter>(value: .home)
     
+    var delegate: CategoryDelegate?
     let disposeBag = DisposeBag()
 
+    
+    func filter (controller: HomeViewController, category_id:Int?) {
+        delegate?.categorySelected(controller, category_id: category_id)
+    }
+    
     init() {
+        delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(self.fetchPersons), name: Notification.Name("RetryServiceNotificationIdentifier"), object: nil)
     }
     
@@ -86,7 +97,7 @@ class HomeViewModel: CategoryDelegate {
     }
      
     
-    func categorySelected(_ controller: CategoryViewController, category_id: Int?) {
+    func categorySelected(_ controller: HomeViewController, category_id: Int?) {
         switch category_id {
             case 0: routesSubject.onNext(.actors)
             case 1: routesSubject.onNext(.directors)

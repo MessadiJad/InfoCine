@@ -18,7 +18,6 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     let contentController = WKUserContentController()
     let configuration = WKWebViewConfiguration()
 
-    var categoryCoordinator: CategoryCoordinator?
     var detailsCoordinator: DetailsCoordinator?
 
     let spinnerView = SpinnerView()
@@ -47,9 +46,36 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
         homeWebView.load(request)
         
         viewModel.fetchPersons()
+        intiSegment()
    
     }
      
+    
+    func intiSegment() {
+        let segment: UISegmentedControl = UISegmentedControl(items: ["Actors", "Directors", "Producers",])
+           segment.sizeToFit()
+           if #available(iOS 13.0, *) {
+               segment.selectedSegmentTintColor = .init(hex: "#B7312C")
+           } else {
+              segment.tintColor = .init(hex: "#B7312C")
+           }
+            segment.selectedSegmentIndex = 0
+        segment.layer.borderColor = UIColor.init(hex: "#B7312C").cgColor
+            segment.layer.borderWidth = 1
+        segment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.darkGray], for: .normal)
+        segment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.white], for: .selected)
+        segment.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
+        segment.selectedSegmentIndex = UISegmentedControl.noSegment
+
+           self.navigationItem.titleView = segment
+    }
+    
+    
+    @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        self.viewModel.filter(controller: self, category_id: sender.selectedSegmentIndex)
+        homeWebView.reload()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
        // spinnerView.show(uiView: self.view)
   
@@ -101,11 +127,8 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
             }
         }
     
-    @IBAction func showCategories(sender: UIBarButtonItem) {
-        if let navigationController = self.navigationController {
-            categoryCoordinator = CategoryCoordinator(navigationController: navigationController, categoris: [])
-            categoryCoordinator?.start()
-        }
+    @IBAction func HomeRefresh(sender: UIBarButtonItem) {
+            //Home refresh
     }
     
     override func viewWillDisappear(_ animated: Bool) {
