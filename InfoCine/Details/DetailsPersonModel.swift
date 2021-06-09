@@ -26,11 +26,11 @@ class PersonContent: Decodable {
     var nationalite: String?
     var commentaire: String?
     var profession: String?
-    var date_naissance: String?
+    var date_naissance: Int?
     var photo: String?
     
     
-    init(nom: String, url_dbpedia: String, lieu_naissance: String, nationalite: String, commentaire: String, profession: String, date_naissance: String, photo: String) {
+    init(nom: String, url_dbpedia: String, lieu_naissance: String, nationalite: String, commentaire: String, profession: String, date_naissance: Int, photo: String) {
         self.nom = nom
         self.url_dbpedia = url_dbpedia
         self.lieu_naissance = lieu_naissance
@@ -58,6 +58,6 @@ class PersonContent: Decodable {
 
 extension PersonContent {
     static var empty: PersonContent {
-        return PersonContent(nom: "", url_dbpedia: "", lieu_naissance: "", nationalite: "", commentaire: "", profession: "", date_naissance: "", photo: "")
+        return PersonContent(nom: "", url_dbpedia: "", lieu_naissance: "", nationalite: "", commentaire: "", profession: "", date_naissance: 0, photo: "")
     }
 }

@@ -23,8 +23,7 @@ final class DetailsCoordinator: Coordinator {
     func start(person: PersonContent) {
         let detailsVC = DetailsViewController.instantiate(with: .Main)
         detailsVC.viewModel.getData(person: person)
-
-        navigationController.show(detailsVC, sender: self)
+        navigationController.show(detailsVC, sender: person)
     }
 
 }

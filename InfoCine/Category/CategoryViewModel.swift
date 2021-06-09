@@ -9,8 +9,8 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-protocol FilterViewControllerDelegate:class {
-    func filterd(_ controller: CategoryViewController, category_id: Int?)
+protocol CategoryDelegate:class {
+    func categorySelected(_ controller: CategoryViewController, category_id: Int?)
 }
 
 class CategoryViewModel {
@@ -19,22 +19,16 @@ class CategoryViewModel {
     let listOfCategory = [
         CategoryModel(category_id: 0, title:"Actors"),
         CategoryModel(category_id: 1, title:"Directors"),
-        CategoryModel(category_id: 2, title:"Producers")
-    ]
-    var delegate: FilterViewControllerDelegate?
+        CategoryModel(category_id: 2, title:"Producers") ]
+    
+    var delegate: CategoryDelegate?
     let disposeBag = DisposeBag()
     
-    init() {
-        fetchCategoryList()
-    }
-    
-    func fetchCategoryList() {
-        categorys.accept(listOfCategory)
-    }
+    init() { categorys.accept(listOfCategory) }
      
     func filter (controller: CategoryViewController, category_id:Int?) {
         delegate = HomeViewModel()
-        delegate?.filterd(controller, category_id: category_id)
+        delegate?.categorySelected(controller, category_id: category_id)
     }
 
 }

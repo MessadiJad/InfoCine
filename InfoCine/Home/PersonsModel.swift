@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 struct HomeResult: Decodable {
     let path : String
     let persons : [Persons]
@@ -67,6 +65,6 @@ extension HomeResult {
 
 extension Persons {
     static var empty: Persons {
-        return Persons(id: 0, idPerson: 0, fullname: "", urldbpedia: "", date_naissance: "", commentaire: "", code: "", lastname: "", path: "", img: "")
+        return Persons(id: 0, idPerson: 0, fullname: "fdsfdsfdsfsds", urldbpedia: "", date_naissance: "", commentaire: "", code: "", lastname: "", path: "", img: "")
     }
 }

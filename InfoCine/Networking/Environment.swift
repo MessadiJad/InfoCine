@@ -5,7 +5,6 @@ enum Server {
     case developement
 }
 
-
 class Environment {
     
     static let server:Server = .developement
@@ -17,7 +16,7 @@ class Environment {
         }
     }
     
-    static func urlType(_ type: APIRouter, limit:Int, offset: Int, idPeron:Int, idFilm: Int) -> URL? {
+    static func urlType(_ type: APIRouter, limit:Int, offset: Int, idPeron:String, idFilm: Int) -> URL? {
         let baseURL:String = {
             return Environment.APIBaseURL()
         }()
@@ -34,10 +33,7 @@ class Environment {
                 return "/rubrique/producteurs/limit/\(limit)/offset/\(offset)"
             case .person:
                 return "/personne/\(idPeron)"
-            case .imagesPerson:
-                return "/public/images/personne/\(idPeron)"
-            case .imagesFilm:
-                return "/public/images/film/\(idFilm)"
+            default: return nil
             }
         }()
         
@@ -49,4 +45,28 @@ class Environment {
         return nil
     }
     
+    class func ImagesURL(type: APIRouter,  id : String) -> URL? {
+        
+        let baseURL:String = {
+            return Environment.APIBaseURL()
+        }()
+        let relativePath: String? = {
+            switch type {
+            case .imagesFilm:
+                return "/images/film/"
+            case .imagesPerson:
+                return "/images/personne/\(id)"
+            default: return nil
+            }
+        }()
+        
+        if let url = URL(string: baseURL) {
+            if let relativePath = relativePath {
+                return url.appendingPathComponent(relativePath)
+            }
+        }
+        return nil
+    }
+
 }
+

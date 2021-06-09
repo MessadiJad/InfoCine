@@ -9,15 +9,16 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CategoryViewController: BaseViewController, Storyboarded {
+class CategoryViewController: UIViewController, Storyboarded, NavBarCustomed {
        
     @IBOutlet weak var categoryTableView : UITableView!
     let viewModel = CategoryViewModel()
         
     override func viewDidLoad() {
-        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        setupNavigationBar(with: "Category")
+        
         viewModel.categorys.bind(to: self.categoryTableView.rx.items(cellIdentifier: "categoryCell", cellType: CategoryTableViewCell.self)) {row, model, cell  in
-            
             switch row{
                 case 0: cell.categoryBg?.image = UIImage(named: "Actors")
                 case 1: cell.categoryBg?.image = UIImage(named: "Directors")
@@ -25,11 +26,9 @@ class CategoryViewController: BaseViewController, Storyboarded {
             default: break
             }
             cell.titleLabel?.text = model.title
-
         }.disposed(by: self.viewModel.disposeBag)
         
         categoryTableView.rx.modelSelected(CategoryModel.self).subscribe(onNext : { choice in
-            
             self.viewModel.filter(controller: self, category_id: choice.category_id)
             self.close()
         }).disposed(by: self.viewModel.disposeBag)
@@ -38,8 +37,7 @@ class CategoryViewController: BaseViewController, Storyboarded {
         categoryTableView
             .rx.setDelegate(self)
             .disposed(by: self.viewModel.disposeBag)
-        
-        viewModel.fetchCategoryList()
+    
     }
   
     @IBAction func close() {
@@ -51,7 +49,7 @@ extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             let count = viewModel.categorys.value.count
             return tableView.frame.height / CGFloat(count)
-        }
+    }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {

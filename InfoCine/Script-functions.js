@@ -22,7 +22,7 @@ function fillTable(data) {
     
     var cell = document.createElement('tr');
     cell.onclick = function() {
-        window.webkit.messageHandlers.openDetails.postMessage('details opened');
+        window.webkit.messageHandlers.openDetails.postMessage(data[0][0]);
     }
     window.tableBody.appendChild(cell);
     
@@ -31,7 +31,7 @@ function fillTable(data) {
         var imageRow = document.createElement('td');
                 
         var imageView = document.createElement('img');
-        imageView.src = rowData[0];
+        imageView.src = rowData[1];
         imageRow.appendChild(imageView);
         
         cell.appendChild(imageRow);
@@ -40,11 +40,11 @@ function fillTable(data) {
         var textRow = document.createElement('td');
         
         var title = document.createElement('h3');
-        title.appendChild(document.createTextNode(rowData[1]));
+        title.appendChild(document.createTextNode(rowData[2]));
         textRow.appendChild(title);
         
         var desc = document.createElement('p');
-        desc.appendChild(document.createTextNode(rowData[2]));
+        desc.appendChild(document.createTextNode(rowData[3]));
         textRow.appendChild(desc);
         var devider = document.createElement('hr');
         textRow.appendChild(devider);

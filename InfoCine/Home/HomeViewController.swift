@@ -10,34 +10,28 @@ import WebKit
 import RxSwift
 import RxCocoa
 
-class HomeViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate,Storyboarded, WKScriptMessageHandler {
-    
-    
+class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Storyboarded, WKScriptMessageHandler, NavBarCustomed {
+   
+    private let viewModel = HomeViewModel()
     
     @IBOutlet var homeWebView: WKWebView!
     let contentController = WKUserContentController()
     let configuration = WKWebViewConfiguration()
-    
-    var generatedHtml : String?
-    var receivedContent: String? = ""
-    private let viewModel = HomeViewModel()
+
     var categoryCoordinator: CategoryCoordinator?
     var detailsCoordinator: DetailsCoordinator?
-    var detailsViewController: DetailsViewModel?
 
-    
     let spinnerView = SpinnerView()
 
     let disposeBag = DisposeBag()
 
- 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setupNavigationBar(with: "Home")
         homeWebView.navigationDelegate = self
         homeWebView.uiDelegate = self
-        
         
         let preferences = WKPreferences()
         preferences.javaScriptEnabled = true
@@ -50,21 +44,16 @@ class HomeViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate,S
         let request = URLRequest(url: url)
         homeWebView.load(request)
         
-        viewModel.fetchData()
- 
+        viewModel.fetchPersons()
+   
     }
-    
+     
     override func viewDidAppear(_ animated: Bool) {
-        spinnerView.show(uiView: self.view)
-
-       self.homeWebView.evaluateJavaScript("clearTable();")
-
-        self.homeWebView.reload()
-
+       // spinnerView.show(uiView: self.view)
+  
     }
   
-    
-    
+ 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         homeWebView.injectJS(resource: "Script-functions", type: "js")
         if let filepath = Bundle.main.path(forResource: "Style", ofType: "css") {
@@ -75,15 +64,16 @@ class HomeViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate,S
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.homeWebView.evaluateJavaScript("clearTable();")
         self.homeWebView.evaluateJavaScript("createTable();")
         viewModel.personsBehavior.subscribe{ element in
             let value = element.map{ return $0 }
-            if let imageUrl = value.element?.img, let fullname = value.element?.fullname, let desc = value.element?.commentaire{
+            if let id = value.element?.id, let imageId = value.element?.img, let fullname = value.element?.fullname, let desc = value.element?.commentaire{
                 if value.element != nil {
                     self.spinnerView.hide()
-                    self.homeWebView.evaluateJavaScript("fillTable([['\(imageUrl)','\(fullname)','\(desc)']]);")
+                    guard let imageUrl = Environment.ImagesURL(type: .imagesPerson, id: imageId) else {return}
+                    self.homeWebView.evaluateJavaScript("fillTable([['\(id)','\(imageUrl)','\(fullname)','\(desc)']]);")
                 }
-              
             }
         }.disposed(by: viewModel.disposeBag)
         userControllerList(webView)
@@ -98,36 +88,27 @@ class HomeViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate,S
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "openDetails" {
             viewModel.routesSubject.onNext(.person)
-            print(message.body)
             if let navigationController = self.navigationController {
-               
-                viewModel.fetchPerson()
-                
-                viewModel.personBehavior.subscribe({ person in
-                    self.detailsCoordinator = DetailsCoordinator(navigationController: navigationController)
-                    if let personC = person.element {
-                        self.detailsCoordinator?.start(person :personC )
-
-                    }
-                    
-                }).disposed(by: viewModel.disposeBag)
-            
-                    }
-                 
-
-
+                if let str = message.body as? String {
+                        viewModel.fetchDetailsPerson(idPeron: str, completion: { (result) in
+                        self.detailsCoordinator = DetailsCoordinator(navigationController: navigationController)
+                        self.detailsCoordinator?.start(person :result)
+                    })
+                }
+            }
             }
         }
     
-
     @IBAction func showCategories(sender: UIBarButtonItem) {
         if let navigationController = self.navigationController {
             categoryCoordinator = CategoryCoordinator(navigationController: navigationController, categoris: [])
-      //      categoryCoordinator?.categoryViewController.viewModel.delegate =  self.viewModel
             categoryCoordinator?.start()
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationItem.title = " "
+    }
 }
 
 
