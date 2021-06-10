@@ -5,7 +5,7 @@ enum APIRouter {
     case actors
     case directors
     case producers
-    case person
+    case personDetails
     case imagesFilm
     case imagesPerson
 

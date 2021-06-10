@@ -31,7 +31,7 @@ class Environment {
                 return "/rubrique/directeurs/limit/\(limit)/offset/\(offset)"
             case .producers:
                 return "/rubrique/producteurs/limit/\(limit)/offset/\(offset)"
-            case .person:
+            case .personDetails:
                 return "/personne/\(idPeron)"
             default: return nil
             }

@@ -115,7 +115,7 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "openDetails" {
-            viewModel.routesSubject.onNext(.person)
+            viewModel.routesSubject.onNext(.personDetails)
             if let navigationController = self.navigationController {
                 if let str = message.body as? String {
                         viewModel.fetchDetailsPerson(idPeron: str, completion: { (result) in

@@ -34,9 +34,9 @@ class HomeViewModel: CategoryDelegate {
     @objc func fetchPersons() {
          
         let body = [ "limit" : 10,
-                     "offset" : 5] as [String : Int]
+                     "offset" : 6] as [String : Int]
     
-        routesSubject.take(1).subscribe(onNext: { [weak self] route in
+        routesSubject.subscribe(onNext: { [weak self] route in
                         
             guard let self = self else {return}
             API.shared.service(from: body, router: route) { result in

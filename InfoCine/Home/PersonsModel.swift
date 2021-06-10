@@ -22,12 +22,13 @@ class Persons: Decodable {
     var urldbpedia: String?
     var date_naissance: String?
     var commentaire: String?
+    var profession :String?
     var code: String?
     var lastname: String?
     var path :String?
     var img: String?
     
-    init(id: Int, idPerson: Int, fullname: String, urldbpedia: String, date_naissance: String, commentaire: String, code: String, lastname: String, path: String, img: String) {
+    init(id: Int, idPerson: Int, fullname: String, urldbpedia: String, date_naissance: String, commentaire: String, code: String, lastname: String, path: String, img: String, profession : String) {
         self.id = id
         self.idPerson = idPerson
         self.fullname = fullname
@@ -35,6 +36,7 @@ class Persons: Decodable {
         self.date_naissance = date_naissance
         self.commentaire = commentaire
         self.code = code
+        self.profession = profession
         self.lastname = lastname
         self.path = path
         self.img = img
@@ -49,6 +51,7 @@ class Persons: Decodable {
         case date_naissance
         case commentaire
         case code
+        case profession
         case lastname
         case path
         case img
@@ -65,6 +68,6 @@ extension HomeResult {
 
 extension Persons {
     static var empty: Persons {
-        return Persons(id: 0, idPerson: 0, fullname: "fdsfdsfdsfsds", urldbpedia: "", date_naissance: "", commentaire: "", code: "", lastname: "", path: "", img: "")
+        return Persons(id: 0, idPerson: 0, fullname: "fdsfdsfdsfsds", urldbpedia: "", date_naissance: "", commentaire: "", code: "", lastname: "", path: "", img: "", profession: "")
     }
 }

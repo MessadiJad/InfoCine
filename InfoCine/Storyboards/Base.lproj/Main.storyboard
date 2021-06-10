@@ -39,9 +39,6 @@
                     <navigationItem key="navigationItem" title="Home" largeTitleDisplayMode="always" id="hqE-2i-L4H">
                         <barButtonItem key="rightBarButtonItem" image="house" catalog="system" id="9PW-go-VCT">
                             <color key="tintColor" red="0.71764705880000002" green="0.19215686269999999" blue="0.17254901959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="HomeRefreshWithSender:" destination="BYZ-38-t0r" id="aVu-D1-q8l"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
