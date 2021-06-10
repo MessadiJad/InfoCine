@@ -52,10 +52,7 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
                     .subscribe(onNext:{ indexPath in
                         
                         self.viewModel.getMovieContent(details: details).subscribe(onNext: { data in
-                            print()
                             self.openMovieDetailsScreen(data: data[indexPath.row])
-
-                        
                         }).disposed(by: self.viewModel.disposeBag)
                         
                         
@@ -73,12 +70,10 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
         personImageView.downloaded(from: .imagesPerson, link: imageUrl)
     }
     
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-         let width = collectionView.bounds.width
-         let cellWidth = (width - 30) / 3
-         return CGSize(width: cellWidth, height: cellWidth / 0.6)
-     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+      {
+         return CGSize(width: 100.0, height: 150.0)
+      }
     
     func openMovieDetailsScreen(data : PersonContent.MovieContent) {
         if let navigationController = self.navigationController {

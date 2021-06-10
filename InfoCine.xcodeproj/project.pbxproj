@@ -206,8 +206,8 @@
 		E1606590266ADE910077EB02 /* InfoCine */ = {
 			isa = PBXGroup;
 			children = (
-				E1FBBD9226728D8700BF1D13 /* DetailsFilm */,
 				E1606591266ADE910077EB02 /* AppDelegate.swift */,
+				E1FBBD9226728D8700BF1D13 /* DetailsFilm */,
 				E16065D3266AE09F0077EB02 /* Home */,
 				E1E33671266E8B2F00ABB455 /* DetailsPerson */,
 				E1F89970266BE1EB007F5BCE /* Networking */,
