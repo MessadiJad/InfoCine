@@ -9,52 +9,39 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-protocol CategoryDelegate:class {
-    func categorySelected(_ controller: HomeViewController, category_id: Int?)
-}
 
-class HomeViewModel: CategoryDelegate {
+
+class HomeViewModel {
  
-    let personsBehavior = PublishSubject<Persons>()
-    let routesSubject = BehaviorSubject<APIRouter>(value: .home)
-    
-    var delegate: CategoryDelegate?
+    let detailsRouteSubject = BehaviorSubject<APIRouter>(value: .personDetails)
+    var personsArray : [Persons]
     let disposeBag = DisposeBag()
 
-    
-    func filter (controller: HomeViewController, category_id:Int?) {
-        delegate?.categorySelected(controller, category_id: category_id)
+    init(person : [Persons]) {
+        self.personsArray = person
     }
     
-    init() {
-        delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(self.fetchPersons), name: Notification.Name("RetryServiceNotificationIdentifier"), object: nil)
-    }
-    
-    @objc func fetchPersons() {
+    func fetchPersons(route : APIRouter, completion: @escaping (Bool)-> Void) {
          
         let body = [ "limit" : 10,
                      "offset" : 6] as [String : Int]
     
-        routesSubject.subscribe(onNext: { [weak self] route in
-                        
-            guard let self = self else {return}
             API.shared.service(from: body, router: route) { result in
                 switch result {
                 case .fail:
                 showErrorAlertView(title: NSLocalizedString("ERROR_TITLE", comment: ""), body: NSLocalizedString("ERROR_BODY_ITEMS", comment: ""))
                 case .success(let data):
-                    self.decodePersons(with: data)
+                    self.decodePersons(with: data) { stat in
+                        completion(stat)
+                    }
                 }
             }
       
-        }).disposed(by: disposeBag)
-
     }
     
     func fetchDetailsPerson(idPeron: String, completion: @escaping (DetailsPersonResult) -> Void){
         
-        routesSubject.take(1).subscribe{ route in
+        detailsRouteSubject.take(1).subscribe{ route in
             API.shared.detailService(router: route, idPeron: idPeron) { (result) in
                 switch result {
                 case .fail:
@@ -68,21 +55,25 @@ class HomeViewModel: CategoryDelegate {
         
     }
     
-    private func decodePersons(with data: Data) {
-        
+    private func decodePersons(with data: Data, completion: @escaping (Bool) -> Void) {
         do {
          let decoder = JSONDecoder()
          decoder.keyDecodingStrategy = .convertFromSnakeCase
          let results = try decoder.decode(HomeResult.self, from: data)
-            let persons = results.persons
-            for person in persons {
-                personsBehavior.onNext(person)
+            personsArray.removeAll()
+            for person in results.persons {
+                personsArray.append(person)
             }
+           completion(true)
         } catch {
             showErrorAlertView(title: NSLocalizedString("ERROR_TITLE", comment: ""), body: NSLocalizedString("ERROR_BODY_ITEMS", comment: ""))
+            completion(false)
+
         }
         
     }
+    
+ 
     
    private func decodeDetailsPerson(with data: Data) -> DetailsPersonResult? {
         do {
@@ -96,16 +87,5 @@ class HomeViewModel: CategoryDelegate {
         return nil
     }
      
-    
-    func categorySelected(_ controller: HomeViewController, category_id: Int?) {
-        switch category_id {
-            case 0: routesSubject.onNext(.actors)
-            case 1: routesSubject.onNext(.directors)
-            case 2: routesSubject.onNext(.producers)
-        default: break
-        }
-      fetchPersons()
-    }
-    
 }
 

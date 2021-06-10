@@ -20,7 +20,7 @@
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZl-6G-NNJ">
                                 <rect key="frame" x="0.0" y="140" width="414" height="722"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
@@ -39,6 +39,9 @@
                     <navigationItem key="navigationItem" title="Home" largeTitleDisplayMode="always" id="hqE-2i-L4H">
                         <barButtonItem key="rightBarButtonItem" image="house" catalog="system" id="9PW-go-VCT">
                             <color key="tintColor" red="0.71764705880000002" green="0.19215686269999999" blue="0.17254901959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="HomeRefreshWithSender:" destination="BYZ-38-t0r" id="rP8-4T-cng"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

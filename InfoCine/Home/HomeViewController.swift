@@ -12,12 +12,13 @@ import RxCocoa
 
 class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Storyboarded, WKScriptMessageHandler, NavBarCustomed {
    
-    private let viewModel = HomeViewModel()
+    private let viewModel = HomeViewModel(person: [])
     
     @IBOutlet var homeWebView: WKWebView!
     let contentController = WKUserContentController()
     let configuration = WKWebViewConfiguration()
-
+    var rubriqueSegmentedControl = UISegmentedControl()
+    
     var detailsCoordinator: DetailsCoordinator?
 
     let spinnerView = SpinnerView()
@@ -44,43 +45,55 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
         homeWebView.loadFileURL(url, allowingReadAccessTo: url)
         let request = URLRequest(url: url)
         homeWebView.load(request)
-        
-        viewModel.fetchPersons()
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeRefresh), name: Notification.Name("RetryServiceNotificationIdentifier"), object: nil)
+        loadWebView(route: .home)
         intiSegment()
    
     }
+    
      
+    func loadWebView(route: APIRouter) {
+        spinnerView.show(uiView: self.view)
+        viewModel.fetchPersons(route: route) { stat in
+            if stat { self.homeWebView.reload() }
+        }
+        
+    }
     
     func intiSegment() {
-        let segment: UISegmentedControl = UISegmentedControl(items: ["Actors", "Directors", "Producers",])
-           segment.sizeToFit()
+        rubriqueSegmentedControl = UISegmentedControl(items: ["Actors", "Directors", "Producers",])
+        rubriqueSegmentedControl.sizeToFit()
            if #available(iOS 13.0, *) {
-               segment.selectedSegmentTintColor = .init(hex: "#B7312C")
+            rubriqueSegmentedControl.selectedSegmentTintColor = .init(hex: "#B7312C")
            } else {
-              segment.tintColor = .init(hex: "#B7312C")
+            rubriqueSegmentedControl.tintColor = .init(hex: "#B7312C")
            }
-            segment.selectedSegmentIndex = 0
-        segment.layer.borderColor = UIColor.init(hex: "#B7312C").cgColor
-            segment.layer.borderWidth = 1
-        segment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.darkGray], for: .normal)
-        segment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.white], for: .selected)
-        segment.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
-        segment.selectedSegmentIndex = UISegmentedControl.noSegment
+        rubriqueSegmentedControl.selectedSegmentIndex = 0
+        rubriqueSegmentedControl.layer.borderColor = UIColor.init(hex: "#B7312C").cgColor
+        rubriqueSegmentedControl.layer.borderWidth = 1
+        rubriqueSegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.darkGray], for: .normal)
+        rubriqueSegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.white], for: .selected)
+        rubriqueSegmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
+        rubriqueSegmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
 
-           self.navigationItem.titleView = segment
+           self.navigationItem.titleView = rubriqueSegmentedControl
     }
     
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        self.viewModel.filter(controller: self, category_id: sender.selectedSegmentIndex)
-        homeWebView.reload()
+        switch sender.selectedSegmentIndex {
+            case 0 : loadWebView(route: .actors)
+            case 1 : loadWebView(route: .directors)
+            case 2 : loadWebView(route: .producers)
+        default: break
+        }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-       // spinnerView.show(uiView: self.view)
   
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        showErrorAlertView(title: NSLocalizedString("ERROR_TITLE", comment: ""), body: NSLocalizedString("ERROR_BODY_ITEMS", comment: ""))
+
     }
-  
  
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         homeWebView.injectJS(resource: "Script-functions", type: "js")
@@ -94,16 +107,14 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.homeWebView.evaluateJavaScript("clearTable();")
         self.homeWebView.evaluateJavaScript("createTable();")
-        viewModel.personsBehavior.subscribe{ element in
-            let value = element.map{ return $0 }
-            if let id = value.element?.id, let imageId = value.element?.img, let fullname = value.element?.fullname, let desc = value.element?.commentaire{
-                if value.element != nil {
+        for element in viewModel.personsArray {
+            if let id = element.id, let imageId = element.img, let fullname = element.fullname, let desc = element.commentaire{
                     self.spinnerView.hide()
                     guard let imageUrl = Environment.ImagesURL(type: .imagesPerson, id: imageId) else {return}
                     self.homeWebView.evaluateJavaScript("fillTable([['\(id)','\(imageUrl)','\(fullname)','\(desc)']]);")
-                }
             }
-        }.disposed(by: viewModel.disposeBag)
+        }
+       
         userControllerList(webView)
     }
     
@@ -115,7 +126,7 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "openDetails" {
-            viewModel.routesSubject.onNext(.personDetails)
+            viewModel.detailsRouteSubject.onNext(.personDetails)
             if let navigationController = self.navigationController {
                 if let str = message.body as? String {
                         viewModel.fetchDetailsPerson(idPeron: str, completion: { (result) in
@@ -128,7 +139,10 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
         }
     
     @IBAction func HomeRefresh(sender: UIBarButtonItem) {
-            //Home refresh
+
+        loadWebView(route: .home)
+        rubriqueSegmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {

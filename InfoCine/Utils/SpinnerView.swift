@@ -20,10 +20,7 @@ class SpinnerView {
         if let currentWindow = UIApplication.shared.windows.filter({$0.isKeyWindow}).first {
             currentWindow.addSubview(containerView)
             if !Reachability.isConnectedToNetwork(){
-                currentWindow.addSubview(retryButton)
-                retryButton.anchor(top: nil, left: nil, bottom: currentWindow.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 50, paddingRight: 0, width: 100, height: 40, enableInsets: false)
-                retryButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-                
+                createButton(currentWindow: currentWindow)
             }
         }
         
@@ -45,7 +42,9 @@ class SpinnerView {
         
         retryButton.layer.cornerRadius = 20
         
-        timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(postRetryService), userInfo: nil, repeats: true)
+        
+        
+       // timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(createButton), userInfo: nil, repeats: false)
 
     }
     
@@ -62,8 +61,16 @@ class SpinnerView {
         containerView.removeFromSuperview()
         spinner.removeFromSuperview()
         retryButton.removeFromSuperview()
-        timer.invalidate()
+        //timer.invalidate()
 
+    }
+    
+    @objc func createButton(currentWindow: UIWindow) {
+        retryButton.removeFromSuperview()
+        currentWindow.addSubview(retryButton)
+        retryButton.anchor(top: nil, left: nil, bottom: currentWindow.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 50, paddingRight: 0, width: 100, height: 40, enableInsets: false)
+        retryButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+        
     }
     
     func isHidden() -> Bool{
@@ -77,6 +84,5 @@ class SpinnerView {
     
     @objc func postRetryService() {
         NotificationCenter.default.post(name: Notification.Name("RetryServiceNotificationIdentifier"), object: nil)
-        timer.invalidate()
     }
 }
