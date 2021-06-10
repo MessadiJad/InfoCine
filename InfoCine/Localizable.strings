@@ -22,5 +22,6 @@
 "ERROR_TITLE" = "Erreur";
 "ERROR_BODY_ITEMS" = "Erreur lors de la récupération des éléments";
 "ERROR_TITLE_CATEGORY" = "Erreur lors de la récupération de la catégorie";
+"ERROR_TITLE_DETAILS" = "Détails non disponible";
 "ERROR_GENERIC" = "Erreur générique";
 

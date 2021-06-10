@@ -1,8 +1,8 @@
 //
 //  Utils.swift
-//  CyberMarket
+//  InfoCine
 //
-//  Created by Jad Messadi on 11/5/20.
+//  Created by Jad Messadi on 6/5/21.
 //
 
 import UIKit

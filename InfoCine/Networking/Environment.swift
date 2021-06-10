@@ -53,12 +53,13 @@ class Environment {
         let relativePath: String? = {
             switch type {
             case .imagesFilm:
-                return "/images/film/"
+                return "/images/film/\(id)"
             case .imagesPerson:
                 return "/images/personne/\(id)"
             default: return nil
             }
         }()
+        
         
         if let url = URL(string: baseURL) {
             if let relativePath = relativePath {

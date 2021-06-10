@@ -1,8 +1,8 @@
 //
 //  Extensions.swift
-//  CyberMarket
+//  InfoCine
 //
-//  Created by Jad Messadi on 10/21/20.
+//  Created by Jad Messadi on 6/5/21.
 //
 
 import UIKit
@@ -69,13 +69,30 @@ extension UIImageView {
         }.resume()
     }
     
-    func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleToFill) {
-        if let fullUrl = Environment.ImagesURL(type: .imagesPerson, id: link) {
+    func downloaded(from route : APIRouter, link: String, contentMode mode: UIView.ContentMode = .scaleToFill) {
+        if let fullUrl = Environment.ImagesURL(type: route, id: link) {
             downloaded(from: fullUrl, contentMode: mode)
         }
     }
 }
 
+extension UICollectionViewCell {
+    func shadowDecorate() {
+        let radius: CGFloat = 10
+        contentView.layer.cornerRadius = radius
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.clear.cgColor
+        contentView.layer.masksToBounds = true
+    
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        layer.shadowRadius = 2.0
+        layer.shadowOpacity = 0.5
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
+        layer.cornerRadius = radius
+    }
+}
 extension WKWebView {
     func injectJS(resource: String, type: String, forMainFrameOnly: Bool = true) {
             if let filepath = Bundle.main.path(forResource: resource, ofType: type) {

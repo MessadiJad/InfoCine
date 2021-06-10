@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct HomeResult: Decodable {
+
+struct HomeResult:  Decodable {
     let path : String
     let persons : [Persons]
     let limit : String

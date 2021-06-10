@@ -24,12 +24,11 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     let spinnerView = SpinnerView()
 
     let disposeBag = DisposeBag()
-
+    var didChange = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Home"
         self.setupNavigationBar(with: "Home")
   
         homeWebView.navigationDelegate = self
@@ -51,7 +50,10 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
    
     }
     
-     
+    override func viewWillAppear(_ animated: Bool) {
+        self.title = "Home"
+    }
+    
     func loadWebView(route: APIRouter) {
         spinnerView.show(uiView: self.view)
         viewModel.fetchPersons(route: route) { stat in
@@ -102,6 +104,8 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
                 webView.injectCSS(string: str, suffixIdentifier: "Style")
             }
         }
+        didChange = true
+
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -147,7 +151,16 @@ class HomeViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,Sto
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationItem.title = " "
+        didChange = false
+
     }
+    
+    override func viewLayoutMarginsDidChange() {
+         if didChange {
+            self.navigationController!.navigationBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 96.0)
+             didChange.toggle()
+             }
+         }
 }
 
 

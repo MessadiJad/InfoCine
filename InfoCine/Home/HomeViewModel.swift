@@ -82,7 +82,7 @@ class HomeViewModel {
          let results = try decoder.decode(DetailsPersonResult.self, from: data)
             return results
         } catch {
-            showErrorAlertView(title: NSLocalizedString("ERROR_TITLE", comment: ""), body: NSLocalizedString("ERROR_BODY_ITEMS", comment: ""))
+            showErrorAlertView(title: NSLocalizedString("ERROR_TITLE", comment: ""), body: NSLocalizedString("ERROR_TITLE_DETAILS", comment: ""))
         }
         return nil
     }

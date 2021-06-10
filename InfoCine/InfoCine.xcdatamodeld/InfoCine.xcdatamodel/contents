@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="HomeResultsEntitiy" representedClassName="HomeResultsEntitiy" syncable="YES">
+        <attribute name="limit" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="offset" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="path" optional="YES" attributeType="String"/>
+        <attribute name="persons" optional="YES" attributeType="Binary"/>
+    </entity>
+    <entity name="PersonEntitiy" representedClassName="PersonEntitiy" syncable="YES" codeGenerationType="class"/>
+    <elements>
+        <element name="HomeResultsEntitiy" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="PersonEntitiy" positionX="-54" positionY="18" width="128" height="43"/>
+    </elements>
 </model>

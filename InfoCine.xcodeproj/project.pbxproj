@@ -35,7 +35,6 @@
 		E182EACE266FF96D00586CBE /* DetailsPersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E182EACD266FF96D00586CBE /* DetailsPersonModel.swift */; };
 		E1CB66D4266D0A06002044E1 /* Script-functions.js in Resources */ = {isa = PBXBuildFile; fileRef = E1CB66D3266D0A06002044E1 /* Script-functions.js */; };
 		E1CCB4052670B9AE00369A91 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CCB4042670B9AE00369A91 /* MovieCollectionCell.swift */; };
-		E1CCB40A2670C86600369A91 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CCB4092670C86600369A91 /* SectionHeader.swift */; };
 		E1CCB40F2670CE5900369A91 /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CCB40E2670CE5900369A91 /* CustomNavBar.swift */; };
 		E1E0A660266C295400B4C0B0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E0A65F266C295400B4C0B0 /* AppCoordinator.swift */; };
 		E1E0A665266C296300B4C0B0 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E0A664266C296300B4C0B0 /* HomeCoordinator.swift */; };
@@ -104,7 +103,6 @@
 		E182EACD266FF96D00586CBE /* DetailsPersonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPersonModel.swift; sourceTree = "<group>"; };
 		E1CB66D3266D0A06002044E1 /* Script-functions.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "Script-functions.js"; sourceTree = "<group>"; };
 		E1CCB4042670B9AE00369A91 /* MovieCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionCell.swift; sourceTree = "<group>"; };
-		E1CCB4092670C86600369A91 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		E1CCB40E2670CE5900369A91 /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
 		E1E0A65F266C295400B4C0B0 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E1E0A664266C296300B4C0B0 /* HomeCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
@@ -198,20 +196,18 @@
 		E1606590266ADE910077EB02 /* InfoCine */ = {
 			isa = PBXGroup;
 			children = (
+				E1FBBD9226728D8700BF1D13 /* DetailsFilm */,
 				E1606591266ADE910077EB02 /* AppDelegate.swift */,
-				E1520EB3266CC6F200CE225A /* Localizable.strings */,
-				E1E33671266E8B2F00ABB455 /* Details */,
-				E144E3FA266C42CE00D8FF9F /* Utils */,
+				E16065D3266AE09F0077EB02 /* Home */,
+				E1E33671266E8B2F00ABB455 /* DetailsPerson */,
+				E1F89970266BE1EB007F5BCE /* Networking */,
 				E1E0A65E266C292A00B4C0B0 /* Coordinator */,
 				E1F89971266BE1FE007F5BCE /* Storyboards */,
-				E1F89970266BE1EB007F5BCE /* Networking */,
-				E16065D3266AE09F0077EB02 /* Home */,
+				E144E3FA266C42CE00D8FF9F /* Utils */,
 				E160659D266ADE920077EB02 /* Assets.xcassets */,
 				E16065A2266ADE920077EB02 /* Info.plist */,
+				E1520EB3266CC6F200CE225A /* Localizable.strings */,
 				E160659A266ADE910077EB02 /* InfoCine.xcdatamodeld */,
-				E1520EC2266CCDCE00CE225A /* ListView.html */,
-				E1520EC7266CCE5000CE225A /* Style.css */,
-				E1CB66D3266D0A06002044E1 /* Script-functions.js */,
 			);
 			path = InfoCine;
 			sourceTree = "<group>";
@@ -237,9 +233,10 @@
 		E16065D3266AE09F0077EB02 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				E108030B266B67FE00DB5B51 /* PersonsModel.swift */,
+				E1FBBD7C267250DF00BF1D13 /* ListView */,
 				E1606595266ADE910077EB02 /* HomeViewController.swift */,
 				E1E0A671266C2A1900B4C0B0 /* HomeViewModel.swift */,
+				E108030B266B67FE00DB5B51 /* PersonsModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -266,16 +263,15 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		E1E33671266E8B2F00ABB455 /* Details */ = {
+		E1E33671266E8B2F00ABB455 /* DetailsPerson */ = {
 			isa = PBXGroup;
 			children = (
 				E1E3367C266E99CA00ABB455 /* DetailsViewController.swift */,
 				E1E3367D266E99CA00ABB455 /* DetailsViewModel.swift */,
 				E182EACD266FF96D00586CBE /* DetailsPersonModel.swift */,
 				E1CCB4042670B9AE00369A91 /* MovieCollectionCell.swift */,
-				E1CCB4092670C86600369A91 /* SectionHeader.swift */,
 			);
-			path = Details;
+			path = DetailsPerson;
 			sourceTree = "<group>";
 		};
 		E1F89970266BE1EB007F5BCE /* Networking */ = {
@@ -296,6 +292,23 @@
 				E160659F266ADE920077EB02 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		E1FBBD7C267250DF00BF1D13 /* ListView */ = {
+			isa = PBXGroup;
+			children = (
+				E1520EC2266CCDCE00CE225A /* ListView.html */,
+				E1CB66D3266D0A06002044E1 /* Script-functions.js */,
+				E1520EC7266CCE5000CE225A /* Style.css */,
+			);
+			path = ListView;
+			sourceTree = "<group>";
+		};
+		E1FBBD9226728D8700BF1D13 /* DetailsFilm */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DetailsFilm;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -561,7 +574,6 @@
 				E182EACE266FF96D00586CBE /* DetailsPersonModel.swift in Sources */,
 				E1CCB4052670B9AE00369A91 /* MovieCollectionCell.swift in Sources */,
 				E1080327266B692000DB5B51 /* Environment.swift in Sources */,
-				E1CCB40A2670C86600369A91 /* SectionHeader.swift in Sources */,
 				E1080331266B6B7300DB5B51 /* API.swift in Sources */,
 				E1E0A665266C296300B4C0B0 /* HomeCoordinator.swift in Sources */,
 				E1E33668266E7E0200ABB455 /* Storyboarded.swift in Sources */,
@@ -744,7 +756,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5MEA78ZYGH;
 				INFOPLIST_FILE = InfoCine/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -765,7 +777,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5MEA78ZYGH;
 				INFOPLIST_FILE = InfoCine/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
