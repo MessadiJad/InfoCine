@@ -21,7 +21,7 @@ final class HomeCoordinator: Coordinator {
     
     func start() {
         let homeVC = HomeViewController.instantiate(with: .Main)
-
+        
         navigationController.show(homeVC, sender: self)
     }
 }

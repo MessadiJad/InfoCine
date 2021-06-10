@@ -20,7 +20,7 @@ struct DetailsPersonResult: Decodable {
 struct PersonContent: Decodable {
     
     var nom: String?
-    var url_dbpedia: URL?
+    var url_dbpedia: String?
     var lieu_naissance: String?
     var nationalite: String?
     var commentaire: String?
@@ -34,8 +34,19 @@ struct PersonContent: Decodable {
         var content : MovieContent?
     }
  
-    class MovieContent : Decodable{
-        var pictures : [PictureContent]
+    class MovieContent : Decodable {
+        var brightcove_id : String? = nil
+        var product_title : String? = nil
+        var age_limit : String? = nil
+        var description : String? = nil
+        var movie_duration : String? = nil
+        var imdb_id : String? = nil
+        var original_title : String? = nil
+        var premiere : String? = nil
+        var production_year : String? = nil
+        var search_engine : String? = nil
+        var official_website : String? = nil
+        var pictures : [PictureContent] = []
     }
     
     class PictureContent : Decodable{

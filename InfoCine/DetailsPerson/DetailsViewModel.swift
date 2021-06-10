@@ -36,5 +36,24 @@ class DetailsViewModel {
         return Observable.just(moviesDict)
     }
     
+    
+    func getMovieContent(details: PersonContent) -> Observable<[PersonContent.MovieContent]>{
+
+        if let movieData: [String : PersonContent.Movie] = details.movies {
+            var array : [PersonContent.MovieContent] = []
+            for (_, value) in movieData {
+                if let content = value.content {
+                    array.append(content)
+                }
+            }
+            return Observable.just(array)
+        }
+        
+        return Observable.empty()
+    }
+    
+    
+    
+    
 }
     

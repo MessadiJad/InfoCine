@@ -21,7 +21,8 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
     @IBOutlet var nationaliteLbl: UILabel!
     @IBOutlet weak var moviesCollectionView: UICollectionView!
 
-    
+    var movieDetailsCoordinator: DetailsMovieCordinator?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,9 +32,7 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
             self.commentaireLbl.text = details.commentaire
             if let namePerson = details.nom {
                 self.title = namePerson
-                    //self.setupNavigationBar(with: namePerson)
             }
-            self.urldbpediaLbl.text = details.profession
             self.professionLbl.text = details.profession  ?? "-"
             self.lieu_naissanceLbl.text = details.lieu_naissance  ?? "-"
             self.nationaliteLbl.text = details.nationalite  ?? "-"
@@ -47,7 +46,22 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
                 cell.shadowDecorate()
              }.disposed(by: self.viewModel.disposeBag)
              
-        }).disposed(by: viewModel.disposeBag)
+            self.moviesCollectionView
+                .rx
+                .itemSelected
+                    .subscribe(onNext:{ indexPath in
+                        
+                        self.viewModel.getMovieContent(details: details).subscribe(onNext: { data in
+                            print()
+                            self.openMovieDetailsScreen(data: data[indexPath.row])
+
+                        
+                        }).disposed(by: self.viewModel.disposeBag)
+                        
+                        
+                    }).disposed(by: self.viewModel.disposeBag)
+           
+        }).disposed(by: self.viewModel.disposeBag)
         
         moviesCollectionView.rx.setDelegate(self).disposed(by: viewModel.disposeBag)
 
@@ -66,6 +80,12 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
          return CGSize(width: cellWidth, height: cellWidth / 0.6)
      }
     
+    func openMovieDetailsScreen(data : PersonContent.MovieContent) {
+        if let navigationController = self.navigationController {
+        self.movieDetailsCoordinator = DetailsMovieCordinator(navigationController: navigationController)
+        self.movieDetailsCoordinator?.start(movieContent: data)
+        }
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationItem.title = "Home"

@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SignInLogoSecond" translatesAutoresizingMaskIntoConstraints="NO" id="gXz-cR-S7T">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="gXz-cR-S7T">
                                 <rect key="frame" x="122.5" y="359.5" width="175" height="175"/>
                                 <color key="tintColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -39,6 +39,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="SignInLogoSecond" width="400" height="310.5"/>
+        <image name="splash" width="400" height="310.5"/>
     </resources>
 </document>
