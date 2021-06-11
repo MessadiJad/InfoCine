@@ -41,7 +41,6 @@ class Persons: Decodable {
         self.lastname = lastname
         self.path = path
         self.img = img
-        
     }
     
     enum CodingKeys: String, CodingKey   {
@@ -56,7 +55,7 @@ class Persons: Decodable {
         case lastname
         case path
         case img
-
+        
     }
 }
 
@@ -65,7 +64,6 @@ extension HomeResult {
         return HomeResult(path: "", persons: [], limit:"", offset: 0)
     }
 }
-
 
 extension Persons {
     static var empty: Persons {

@@ -1,32 +1,35 @@
 body {
-  margin: 0;
-  background-color: #000;
-  display: grid;
-  height: 100vh;
-  place-items: center;
-  font-family: sans-serif;
+    margin: 0;
+    background-color: #000;
+    display: grid;
+    height: 100vh;
+    place-items: center;
+    font-family: sans-serif;
 }
+
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 table {
-border: medium solid #000;
-width: 100%;
+    border: medium solid #000;
+    width: 100%;
 }
+
 td {
-width: 50%;
+    width: 50%;
 
 }
+
 tr {
-width: 50%;
-margin: 50px;
-
+    width: 50%;
+    margin: 50px;
 }
+
 img {
     border: 1px solid #ddd;
-      border-radius: 4px;
-      width: 150px;
+    border-radius: 4px;
+    width: 150px;
 }
 
 hr {

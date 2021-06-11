@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Storyboarded.swift
 //  InfoCine
 //
 //  Created by Jad Messadi on 6/6/21.
@@ -9,7 +9,6 @@ import UIKit
 
 enum Storyboard : String  {
     case Main
-    case Category
 }
 
 protocol Storyboarded {

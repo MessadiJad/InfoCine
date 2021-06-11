@@ -22,9 +22,7 @@ final class AppCoordinator {
     deinit {  }
     
     func start() {
-        
         let homeCoordinator = HomeCoordinator(navigationController: navigationController)
-        
         homeCoordinator.start()
         childCoordinators.append(homeCoordinator)
     }

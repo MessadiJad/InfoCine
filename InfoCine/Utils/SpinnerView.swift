@@ -14,7 +14,7 @@ class SpinnerView {
     var retryButton = UIButton()
     var currentWindow: UIWindow?
     var timer = Timer()
-
+    
     func setup(uiView: UIView){
         
         if let currentWindow = UIApplication.shared.windows.filter({$0.isKeyWindow}).first {
@@ -44,8 +44,8 @@ class SpinnerView {
         
         
         
-       // timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(createButton), userInfo: nil, repeats: false)
-
+        // timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(createButton), userInfo: nil, repeats: false)
+        
     }
     
     func show(uiView: UIView) {
@@ -62,7 +62,7 @@ class SpinnerView {
         spinner.removeFromSuperview()
         retryButton.removeFromSuperview()
         //timer.invalidate()
-
+        
     }
     
     @objc func createButton(currentWindow: UIWindow) {

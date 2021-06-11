@@ -62,7 +62,7 @@ extension UIImageView {
                 let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                 let data = data, error == nil,
                 let image = UIImage(data: data)
-                else { return }
+            else { return }
             DispatchQueue.main.async() { [weak self] in
                 self?.image = image
             }
@@ -83,7 +83,7 @@ extension UICollectionViewCell {
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.clear.cgColor
         contentView.layer.masksToBounds = true
-    
+        
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 1.0)
         layer.shadowRadius = 2.0
@@ -95,22 +95,22 @@ extension UICollectionViewCell {
 }
 extension WKWebView {
     func injectJS(resource: String, type: String, forMainFrameOnly: Bool = true) {
-            if let filepath = Bundle.main.path(forResource: resource, ofType: type) {
-                if let str = try? String(contentsOfFile: filepath) {
-                    injectJS(string: str, forMainFrameOnly: forMainFrameOnly)
-                }
+        if let filepath = Bundle.main.path(forResource: resource, ofType: type) {
+            if let str = try? String(contentsOfFile: filepath) {
+                injectJS(string: str, forMainFrameOnly: forMainFrameOnly)
             }
         }
-
+    }
+    
     func injectJS(string: String, forMainFrameOnly: Bool = true) {
-            let script = WKUserScript(source: string, injectionTime: .atDocumentStart, forMainFrameOnly: forMainFrameOnly)
-            configuration.userContentController.addUserScript(script)
-        }
-
+        let script = WKUserScript(source: string, injectionTime: .atDocumentStart, forMainFrameOnly: forMainFrameOnly)
+        configuration.userContentController.addUserScript(script)
+    }
+    
     
     func injectCSS(string: String, suffixIdentifier: String, forMainFrameOnly: Bool = true) {
-            let identifier = "InfoCine-added-CSS-\(suffixIdentifier)"
-            let cssInjection = """
+        let identifier = "InfoCine-added-CSS-\(suffixIdentifier)"
+        let cssInjection = """
             var d = document.createElement('style');
             d.setAttribute('type', 'text/css');
             d.setAttribute('id', '\(identifier)');
@@ -119,8 +119,8 @@ extension WKWebView {
             `
             document.firstElementChild.appendChild(d);
             """
-            let script = WKUserScript(source: cssInjection, injectionTime: .atDocumentStart, forMainFrameOnly: forMainFrameOnly)
-            configuration.userContentController.addUserScript(script)
-        }
+        let script = WKUserScript(source: cssInjection, injectionTime: .atDocumentStart, forMainFrameOnly: forMainFrameOnly)
+        configuration.userContentController.addUserScript(script)
+    }
     
 }

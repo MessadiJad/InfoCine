@@ -11,6 +11,4 @@ import UIKit
 let Application = UIApplication.shared.delegate as! AppDelegate
 let Screen = UIScreen.main.bounds.size
 
-let categoryCffell = "categoryCell"
-
 

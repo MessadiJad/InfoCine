@@ -8,5 +8,4 @@ enum APIRouter {
     case personDetails
     case imagesFilm
     case imagesPerson
-
 }

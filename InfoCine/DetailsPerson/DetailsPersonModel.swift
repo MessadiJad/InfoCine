@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct DetailsPersonResult: Decodable {
     let id : String
     let idPerson : String
@@ -28,12 +27,12 @@ struct PersonContent: Decodable {
     var date_naissance: Int?
     var photo: String?
     var movies: [String:Movie]?
-        
+    
     class Movie : Decodable{
         var title : String?
         var content : MovieContent?
     }
- 
+    
     class MovieContent : Decodable {
         var brightcove_id : String? = nil
         var product_title : String? = nil
@@ -52,18 +51,16 @@ struct PersonContent: Decodable {
     class PictureContent : Decodable{
         var title : String?
         var content : PictureDetails?
-
     }
-  
+    
     class PictureDetails : Decodable{
-            var name : String?
-            var url : String?
-            var width : String?
-            var height : String?
-            var mime_type : String?
-            var picture_type : String?
-
-       }
+        var name : String?
+        var url : String?
+        var width : String?
+        var height : String?
+        var mime_type : String?
+        var picture_type : String?
+    }
     
 }
 

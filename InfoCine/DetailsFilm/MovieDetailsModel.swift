@@ -17,7 +17,7 @@ public enum Strings:String {
     case production_year         = "Production year"
     case age_limit               = "Age limit"
     case premiere                = "Premiere"
-    case movie_duration        = "Movie duration"
-    case search_engine        = "Search engine"
-    case official_website     = "Official website"
+    case movie_duration          = "Movie duration"
+    case search_engine           = "Search engine"
+    case official_website        = "Official website"
 }

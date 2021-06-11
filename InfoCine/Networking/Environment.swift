@@ -59,8 +59,7 @@ class Environment {
             default: return nil
             }
         }()
-        
-        
+    
         if let url = URL(string: baseURL) {
             if let relativePath = relativePath {
                 return url.appendingPathComponent(relativePath)
@@ -68,6 +67,6 @@ class Environment {
         }
         return nil
     }
-
+    
 }
 

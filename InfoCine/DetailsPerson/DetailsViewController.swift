@@ -20,15 +20,15 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
     @IBOutlet var commentaireLbl: UILabel!
     @IBOutlet var nationaliteLbl: UILabel!
     @IBOutlet weak var moviesCollectionView: UICollectionView!
-
+    
     var movieDetailsCoordinator: DetailsMovieCordinator?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         viewModel.personSubject.subscribe(onNext: { details in
-           
+            
             self.commentaireLbl.text = details.commentaire
             if let namePerson = details.nom {
                 self.title = namePerson
@@ -39,30 +39,35 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
             if let thumbImageUrl = details.photo {
                 self.setupImageItem(imageUrl: thumbImageUrl)
             }
-         
+            
             self.viewModel.decodeMovies(details: details).bind(to: self.moviesCollectionView.rx.items(cellIdentifier: "MovieCollectionCell", cellType: MovieCollectionCell.self)) { row, data, cell in
                 cell.movieTitle.text = data.key
                 cell.movieCover.downloaded(from: .imagesFilm, link: data.value)
                 cell.shadowDecorate()
-             }.disposed(by: self.viewModel.disposeBag)
-             
+                //FIXME//
+                /* Both Swift, JSON Dictionaries are unordered by there nature. The JSON format does notmaintain key ordering, and as such, does not required parser to preserve the order.
+                 
+                 If you need an ordered collection, you its better to returning an array of key-value pairs in the JSON */
+                //https://stackoverflow.com/questions/62218765/decode-keyvaluepairsstring-person-from-json
+                
+            }.disposed(by: self.viewModel.disposeBag)
+            
             self.moviesCollectionView
                 .rx
                 .itemSelected
-                    .subscribe(onNext:{ indexPath in
-                        
-                        self.viewModel.getMovieContent(details: details).subscribe(onNext: { data in
-                            self.openMovieDetailsScreen(data: data[indexPath.row])
-                        }).disposed(by: self.viewModel.disposeBag)
-                        
-                        
+                .subscribe(onNext:{ indexPath in
+                    
+                    self.viewModel.getMovieContent(details: details).subscribe(onNext: { data in
+                        self.openMovieDetailsScreen(data: data[indexPath.row])
                     }).disposed(by: self.viewModel.disposeBag)
-           
+                    
+                }).disposed(by: self.viewModel.disposeBag)
+            
         }).disposed(by: self.viewModel.disposeBag)
         
         moviesCollectionView.rx.setDelegate(self).disposed(by: viewModel.disposeBag)
-
-}
+        
+    }
     
     func setupImageItem(imageUrl: String) {
         personImageView.contentMode = .scaleToFill
@@ -71,19 +76,18 @@ class DetailsViewController: UIViewController, Storyboarded, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-      {
-         return CGSize(width: 100.0, height: 150.0)
-      }
+    {
+        return CGSize(width: 100.0, height: 150.0)
+    }
     
-    func openMovieDetailsScreen(data : PersonContent.MovieContent) {
+    func openMovieDetailsScreen(data : PersonContent.MovieContent){
         if let navigationController = self.navigationController {
-        self.movieDetailsCoordinator = DetailsMovieCordinator(navigationController: navigationController)
-        self.movieDetailsCoordinator?.start(movieContent: data)
+            self.movieDetailsCoordinator = DetailsMovieCordinator(navigationController: navigationController)
+            self.movieDetailsCoordinator?.start(movieContent: data)
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationItem.title = "Home"
     }
-    
 }

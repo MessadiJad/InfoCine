@@ -1,15 +1,9 @@
-
-
 if(window.infocine == undefined){
     window.infocine={};
 };
 
-window.infocine.acceptCookies = function(fullname) {
-    document.querySelector('#fullname').innerText += fullname;
-};
-
-
 function createTable() {
+    
     var table = document.createElement('table');
     window.tableBody = document.createElement('tbody');
     
@@ -27,15 +21,14 @@ function fillTable(data) {
     window.tableBody.appendChild(cell);
     
     data.forEach(function(rowData) {
-            
+        
         var imageRow = document.createElement('td');
-                
+        
         var imageView = document.createElement('img');
         imageView.src = rowData[1];
         imageRow.appendChild(imageView);
         
         cell.appendChild(imageRow);
-        
         
         var textRow = document.createElement('td');
         
@@ -49,11 +42,10 @@ function fillTable(data) {
         var devider = document.createElement('hr');
         textRow.appendChild(devider);
         cell.appendChild(textRow)
-      
+        
     });
-
+    
 }
-
 
 function clearTable() {
     var list = document.querySelector('table');

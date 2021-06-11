@@ -1,5 +1,5 @@
 //
-//  ListItemsCoordinator.swift
+//  HomeCoordinator.swift
 //  InfoCine
 //
 //  Created by Jad Messadi on 6/5/21.
@@ -21,7 +21,6 @@ final class HomeCoordinator: Coordinator {
     
     func start() {
         let homeVC = HomeViewController.instantiate(with: .Main)
-        
         navigationController.show(homeVC, sender: self)
     }
 }

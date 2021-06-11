@@ -11,21 +11,10 @@ import RxSwift
 
 class MovieDetailViewModel {
     
-    let disposeBag = DisposeBag()
+    var data = PersonContent.MovieContent()
 
-    let movieDetailSubject = PublishSubject<PersonContent.MovieContent>()
     var movieData:  BehaviorRelay<[MovieData]>  = BehaviorRelay<[MovieData]>(value: [])
     
-    var data = PersonContent.MovieContent()
-        
-        
-    
-    func getData() {
-        movieDetailSubject.onNext(data)
+    let disposeBag = DisposeBag()
 
-    }
-    
-    
-    
-    
 }
